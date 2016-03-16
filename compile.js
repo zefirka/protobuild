@@ -74,10 +74,12 @@ pages.forEach(function (pageName) {
     var pageJson = JSON.parse(read(`./pages/${pageName}`));
 
     let entry = read(`./declarations/${pageJson.entry}.html`);
-    let js = getScript(pageJson.js);
+    let js = getScript(pageJson.js || []);
+    let css = getLink(pageJson.css || []);
 
     let data = Object.assign({
-        js: js
+        js: js,
+        css: css,
     }, pageJson.data);
 
     let page = interpolate(entry, data);
@@ -92,5 +94,11 @@ pages.forEach(function (pageName) {
 function getScript(js) {
     return js.map(function (adr) {
         return `<script type="text/javascript" src="${join(__dirname, adr)}"></script>`;
+    }).join('\n');
+}
+
+function getLink(css) {
+    return css.map(function (adr) {
+        return `<link rel="stylesheet" href="${join(__dirname, adr)}"></link>`;
     }).join('\n');
 }

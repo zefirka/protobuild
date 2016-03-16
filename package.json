@@ -1,6 +1,6 @@
 {
   "name": "protobuilder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "compile.js",
   "scripts": {
     "compile": "node compile.js",
@@ -22,6 +22,8 @@
     "warden.js": "^0.4.1"
   },
   "dependencies": {
+    "bootstrap": "^3.3.6",
+    "gulp-less": "^3.0.5",
     "jquery": "^1.11.3"
   }
 }

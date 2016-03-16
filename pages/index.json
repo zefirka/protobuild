@@ -1,6 +1,10 @@
 {
 	"name": "index",
 	"entry": "index",
+	"css" : [
+		"node_modules/bootstrap/dist/css/bootstrap.min.css",
+		"bundles/css/app.css"
+	],
 	"js" : [
 		"bundles/js/app.js"
 	],
