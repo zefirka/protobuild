@@ -1,8 +1,9 @@
 {
-  "name": "wp",
+  "name": "protobuilder",
   "version": "0.0.1",
   "main": "compile.js",
   "scripts": {
+    "compile": "node compile.js",
     "test": "./node_modules/.bin/gulp test",
     "postinstall": "./tasks/post-install"
   },
