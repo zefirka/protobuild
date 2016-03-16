@@ -1,0 +1,11 @@
+{
+	"name": "index",
+	"entry": "index",
+	"js" : [
+		"bundles/js/app.js"
+	],
+	"data": {
+		"layout": false,
+		"footer": true
+	}
+}
