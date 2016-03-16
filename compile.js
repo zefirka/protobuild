@@ -5,14 +5,41 @@ const join = require('path').join;
 const inject = require('mexna');
 
 const lodash = require('lodash');
-const contains = lodash.contains;
 const isUndefined = lodash.isUndefined;
 const isObject = lodash.isObject;
+const uniq    = lodash.uniq;
+
+const utils = require('./utils/');
+const getScript = utils.getScript;
+const getLink = utils.getLink;
+const read = utils.read;
+
+let pages = fs.readdirSync(join(__dirname, './pages'));
+
+pages.forEach(function (pageName) {
+    var pageJson = require(`./pages/${pageName}`);
+    let entry = read(`./declarations/${pageJson.entry}.html`);
+
+    let js = getScript(pageJson.js || []);
+    let css = getLink(pageJson.css || []);
+
+    let data = Object.assign({
+        js: js,
+        css: css,
+    }, pageJson.data);
+
+    let page = interpolate(entry, data);
+
+    fs.writeFile(`./bundles/html/${pageJson.name}.html`, page, function (err) {
+        if (err) {
+            throw new Error(err);
+        }
+    });
+});
 
 function interpolate(str, data) {
     const reg = /\$\{\w+\}/g;
-    let maps = str.match(reg) || [];
-    maps = maps.reduce(unique, []);
+    let maps = uniq(str.match(reg) || []);
 
     data = data || {};
     data = Object.assign({}, data, maps.reduce(function (map, component) {
@@ -54,51 +81,4 @@ function interpolate(str, data) {
     }, {}));
 
     return inject(str, {keys: data});
-}
-
-function unique(sum, c) {
-    if (!contains(sum, c)) {
-        sum.push(c);
-    }
-
-    return sum;
-}
-
-function read(url) {
-    return fs.readFileSync(join(__dirname, url), 'utf-8');
-}
-
-let pages = fs.readdirSync(join(__dirname, './pages'));
-
-pages.forEach(function (pageName) {
-    var pageJson = JSON.parse(read(`./pages/${pageName}`));
-
-    let entry = read(`./declarations/${pageJson.entry}.html`);
-    let js = getScript(pageJson.js || []);
-    let css = getLink(pageJson.css || []);
-
-    let data = Object.assign({
-        js: js,
-        css: css,
-    }, pageJson.data);
-
-    let page = interpolate(entry, data);
-
-    fs.writeFile(`./bundles/html/${pageJson.name}.html`, page, function (err) {
-        if (err) {
-            throw new Error(err);
-        }
-    });
-});
-
-function getScript(js) {
-    return js.map(function (adr) {
-        return `<script type="text/javascript" src="${join(__dirname, adr)}"></script>`;
-    }).join('\n');
-}
-
-function getLink(css) {
-    return css.map(function (adr) {
-        return `<link rel="stylesheet" href="${join(__dirname, adr)}"></link>`;
-    }).join('\n');
 }
