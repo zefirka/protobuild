@@ -1,14 +1,19 @@
 'use strict';
 
-const gulp        = require('gulp');
-const browserify  = require('gulp-browserify');
-const less        = require('gulp-less');
-const join        = require('path').join;
+const gulp = require('gulp');
+const browserify = require('gulp-browserify');
+const less = require('gulp-less');
+const join = require('path').join;
+const shell = require('gulp-shell');
+const task = require('./utils/gulp-task')(gulp);
 
-// Basic usage
-gulp.task('scripts', function () {
-    // Single entry point to browserify
-    gulp.src('./static/js/app.js')
+task('compile', function () {
+    return gulp.src('compile.js', {read: false})
+        .pipe(shell(['node compile.js']));
+});
+
+task('scripts', function () {
+    return gulp.src('./static/js/app.js')
         .pipe(browserify({
             insertGlobals: true,
             debug: true
@@ -16,15 +21,25 @@ gulp.task('scripts', function () {
         .pipe(gulp.dest('./bundles/js'));
 });
 
-gulp.task('styles', function () {
+task('styles', function () {
     return gulp.src('./static/less/index.less')
         .pipe(less({
             paths: [
-              join(__dirname, 'static/less/modules'),
-              join(__dirname, 'static/less/blocks')
+                join(__dirname, 'static/less/modules'),
+                join(__dirname, 'static/less/blocks')
             ]
         }))
         .pipe(gulp.dest('./bundles/css'));
 });
 
-gulp.task('default', ['scripts', 'styles']);
+task('watch', () => {
+    gulp.watch('./pages/*', ['compile']);
+    gulp.watch('./components/*', ['compile']);
+    gulp.watch('./declarations/*', ['compile']);
+    gulp.watch('./compile.js', ['compile']);
+
+    gulp.watch('./static/js/**/*.js', ['scripts']);
+    gulp.watch('./static/less/**/*.less', ['styles']);
+});
+
+gulp.task('default', ['scripts', 'styles', 'compile', 'watch']);

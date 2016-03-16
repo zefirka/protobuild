@@ -13,12 +13,13 @@
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-mocha": "^2.2.0",
+    "gulp-shell": "^0.5.2",
     "jscs": "2.0.0",
     "jshint": "2.7.0",
     "jshint-stylish": "0.4.0",
-    "must-dist": "^0.12.0",
     "lodash": "^3.10.1",
     "mexna": "git+https://github.yandex-team.ru/zeffirsky/mexna#v0.1.2",
+    "must-dist": "^0.12.0",
     "warden.js": "^0.4.1"
   },
   "dependencies": {

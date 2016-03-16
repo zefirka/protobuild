@@ -7,7 +7,11 @@ module.exports =  Object.assign({
     entry: 'index',
     data: {
         title: 'Index',
-        layout: true,
+        layout: {
+            header: {
+                logo: false
+            }
+        },
         footer: false
     }
 }, meta);
