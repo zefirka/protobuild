@@ -1,18 +1,23 @@
 'use strict';
 
-const fs = require('fs');
-const join = require('path').join;
+/**
+ * Index of utils module
+ *
+ * @module utils/index
+ */
+
 const html = require('./html');
+const fileSystem = require('./fileSystem');
 
 module.exports = Object.assign({
-    read,
     trim
-}, html);
+}, html, fileSystem);
 
-function read(url) {
-    return fs.readFileSync(join(__dirname, '../', url), 'utf-8');
-}
-
+/**
+ * @public
+ * @param {string[string-like]} x
+ * @return string
+ */
 function trim(x) {
     return x.tirm ? x.trim() : ''.trim.call(x);
 }

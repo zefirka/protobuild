@@ -1,7 +1,6 @@
 'use strict';
 
 const fs = require('fs');
-const join = require('path').join;
 const inject = require('mexna');
 
 const lodash = require('lodash');
@@ -15,8 +14,10 @@ const getScript = utils.getScript;
 const getLink = utils.getLink;
 const read = utils.read;
 const trim = utils.trim;
+const readDir = utils.readDir;
+const getStat = utils.getStat;
 
-let pages = fs.readdirSync(join(__dirname, './pages'));
+let pages = readDir('./pages');
 
 pages.forEach(function (pageName) {
     var pageJson = require(`./pages/${pageName}`);
@@ -40,9 +41,10 @@ pages.forEach(function (pageName) {
 });
 
 function interpolate(str, data) {
-    const reg = /\$\{[\w\:,\=\-\s]+\}/g;
+    const searchRegEx = /\$\{[\w\:,\=\-\s]+\}/g;
+    const parseRegEx = /\$\{(.+?)(\:.+\}|\})/g;
 
-    let maps = uniq(str.match(reg) || []);
+    let maps = uniq(str.match(searchRegEx) || []);
 
     let templateParams = getParams(str);
 
@@ -57,8 +59,9 @@ function interpolate(str, data) {
         let decl;
         let comp;
 
-        if (isUndefined(dataComponent) || dataComponent === true || isObject(dataComponent)) {
+        if (isUndefined(dataComponent) || dataComponent === true || typeof dataComponent === 'object') {
             let additionalData = {};
+
             if (isObject(dataComponent)) {
                 Object.assign(additionalData, dataComponent);
             }
@@ -67,17 +70,11 @@ function interpolate(str, data) {
                 decl = read(`./declarations/${component}.html`);
                 let newData = Object.assign({}, data, additionalData);
                 decl = interpolate(decl, newData);
-            } catch (e) {
-
-            }
+            } catch (e) {}
 
             try {
-                comp = read(`./components/${component}.html`);
-                let newData = Object.assign({}, data, additionalData, templateParams[component]);
-                comp = interpolate(comp, newData);
-            } catch (e) {
-
-            }
+                comp = compileComponent(component, Object.assign({}, data, additionalData), templateParams[component]);
+            } catch (e) {}
 
             map[component] = decl || comp || '';
         }
@@ -89,12 +86,44 @@ function interpolate(str, data) {
         return map;
     }, {}));
 
-    return inject(str, {regex: /\$\{(.+?)(\:.+\}|\})/g, keys: data});
+    return inject(str, {regex: parseRegEx, keys: data});
+}
+
+function compileComponent(name, data, componentParams) {
+    let markup = '';
+    let stat = null;
+    let summaryData = Object.assign({}, data);
+
+    try {
+        stat = getStat(`./components/${name}`);
+
+        if (stat.isDirectory()) {
+            let files = readDir(`./components/${name}`);
+            let index = contains(files, `${name}.html`);
+            let hasJs = contains(files, `${name}.js`);
+            let compiler;
+
+            if (!index) {
+                console.error('no index');
+                return null;
+            }
+
+            if (hasJs) {
+                compiler = require(`./components/${name}/${name}.js`);
+                markup = read(`./components/${name}/${name}.html`);
+                Object.assign(summaryData, componentParams, compiler(componentParams, summaryData, interpolate));
+                return interpolate(markup, summaryData);
+            }
+        }
+    } catch (error) {
+        markup = read(`./components/${name}.html`);
+        return interpolate(markup, Object.assign(summaryData, componentParams));
+    }
 }
 
 function getParams(str) {
     const reg = /\$\{[\w\:,\=\-\s]+\}/g;
-    let maps = uniq(str.match(reg) || []);
+    const maps = uniq(str.match(reg) || []);
 
     return maps.reduce(function (tplParams, map) {
         if (contains(map, ':')) {
