@@ -7,12 +7,12 @@ const join = require('path').join;
 const shell = require('gulp-shell');
 const task = require('./utils/gulp-task')(gulp);
 
-task('compile', function () {
+task('compile', () => {
     return gulp.src('compile.js', {read: false})
         .pipe(shell(['node compile.js']));
 });
 
-task('scripts', function () {
+task('scripts', () => {
     return gulp.src('./static/js/app.js')
         .pipe(browserify({
             insertGlobals: true,
@@ -21,7 +21,7 @@ task('scripts', function () {
         .pipe(gulp.dest('./bundles/js'));
 });
 
-task('styles', function () {
+task('styles', () => {
     return gulp.src('./static/less/index.less')
         .pipe(less({
             paths: [

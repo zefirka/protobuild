@@ -8,7 +8,7 @@ module.exports =  Object.assign({
     data: {
         title: 'About',
         layout: {
-            nav: false
+            nav: true
         },
         footer: true
     }
