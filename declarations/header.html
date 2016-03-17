@@ -11,8 +11,18 @@
 				<h1>${title}</h1>		
 			</div>
 			<div class="col-md-3">
-				${button:type=simple, text=Allahu akbar}
+				<div data-module="trigger" data-params="channel: popup.reveal, value: feedback, elem: span">
+					<p>Заказать обратный звонок</p>
+					${button:type=btn-primary, text=Call, tag=span}
+				</div>
 			</div>
 		</div>
 	</div>
 </header>
+
+<div class="b-popup b-popup_hidden b-popup_closed" data-module="popup" data-params="channel: feedback">
+	<div class="b-popup__overlay"></div>
+	<div class="b-popup__content">
+		Test
+	</div>
+</div>

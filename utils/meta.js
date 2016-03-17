@@ -4,6 +4,6 @@ module.exports = {
     ],
     css: [
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
-        'bundles/css/app.css'
+        'bundles/css/index.css'
     ]
 };

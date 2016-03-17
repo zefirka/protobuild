@@ -10,7 +10,9 @@ module.exports = {
 };
 
 var modules = {
-    menu: require('./modules/menu')
+    menu: require('./modules/menu'),
+    popup: require('./modules/popup'),
+    trigger: require('./modules/trigger')
 };
 
 function init() {

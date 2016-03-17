@@ -7,3 +7,5 @@ $(function () {
     modules.init();
 });
 
+window.$ = $;
+window.channel = require('./channel');
