@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict';
 
 const fs = require('fs');
@@ -17,7 +19,7 @@ const trim = utils.trim;
 const readDir = utils.readDir;
 const getStat = utils.getStat;
 
-let pages = readDir('./pages');
+let pages = readDir('../pages');
 
 pages.forEach(function (pageName) {
     var pageJson = require(`./pages/${pageName}`);

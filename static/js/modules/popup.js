@@ -7,7 +7,7 @@ var popup = null;
 var timeout = 100;
 
 module.exports = function (params) {
-    popup = this;
+    popup = this.bem('b-popup');
     timeout = params.timeout;
 
     stream
@@ -22,19 +22,19 @@ module.exports = function (params) {
 };
 
 function show() {
-    popup.removeClass('b-popup_closed');
+    popup.delMod('closed');
 
     setTimeout(function () {
-        popup.removeClass('b-popup_hidden');
-        popup.addClass('b-popup_shown');
+        popup.delMod('hidden');
+        popup.setMod('shown');
     }, timeout);
 }
 
 function hide() {
-    popup.removeClass('b-popup_shown');
-    popup.addClass('b-popup_hidden');
+    popup.delMod('shown');
+    popup.setMod('hidden');
 
     setTimeout(function () {
-        popup.addClass('b-popup_closed');
+        popup.setMod('closed');
     }, timeout);
 }
