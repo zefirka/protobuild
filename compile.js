@@ -97,10 +97,10 @@ function compileComponent(name, data, componentParams) {
     let summaryData = Object.assign({}, data);
 
     try {
-        stat = getStat(`./components/${name}`);
+        stat = getStat(`../components/${name}`);
 
         if (stat.isDirectory()) {
-            let files = readDir(`./components/${name}`);
+            let files = readDir(`../components/${name}`);
             let index = contains(files, `${name}.html`);
             let hasJs = contains(files, `${name}.js`);
             let compiler;
