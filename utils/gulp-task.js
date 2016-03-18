@@ -2,10 +2,10 @@
 
 module.exports = function (gulp) {
     function task(name, fn) {
-        gulp.task(name, function () {
+        gulp.task(name, typeof fn === 'function' ? function () {
             console.log(`---------------> ${name} ::`);
             fn();
-        });
+        } : fn);
 
         return {
             task: task

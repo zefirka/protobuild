@@ -6,6 +6,22 @@ const less = require('gulp-less');
 const join = require('path').join;
 const shell = require('gulp-shell');
 const task = require('./utils/gulp-task')(gulp);
+const autoprefixer = require('gulp-autoprefixer');
+
+task('styles', () => {
+    return gulp.src('./static/less/index.less')
+        .pipe(less({
+            paths: [
+                join(__dirname, 'static/less/modules'),
+                join(__dirname, 'static/less/blocks')
+            ]
+        }))
+        .pipe(autoprefixer({
+            browsers: ['ie >= 8, last 15 versions, > 1%'],
+            cascade: false
+        }))
+        .pipe(gulp.dest('./bundles/css'));
+});
 
 task('compile', () => {
     return gulp.src('compile.js', {read: false})
@@ -19,17 +35,6 @@ task('scripts', () => {
             debug: true
         }))
         .pipe(gulp.dest('./bundles/js'));
-});
-
-task('styles', () => {
-    return gulp.src('./static/less/index.less')
-        .pipe(less({
-            paths: [
-                join(__dirname, 'static/less/modules'),
-                join(__dirname, 'static/less/blocks')
-            ]
-        }))
-        .pipe(gulp.dest('./bundles/css'));
 });
 
 task('watch', () => {

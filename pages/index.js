@@ -1,17 +1,17 @@
 'use strict';
 
-const meta = require('../utils/meta');
+const page = require('../utils/page');
 
-module.exports =  Object.assign({
-    name: 'index',
-    entry: 'index',
-    data: {
-        title: 'Index',
-        layout: {
-            header: {
-                logo: false
-            }
-        },
-        footer: false
-    }
-}, meta);
+module.exports =  page('index', 'Index', {
+    layout: {
+        header: {
+            logo: false
+        }
+    },
+    footer: {
+        footerItems: [
+            {text: 'Allah'},
+            {text: 'Akbar'}
+        ]
+    },
+});
