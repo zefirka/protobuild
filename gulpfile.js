@@ -39,7 +39,7 @@ task('scripts', () => {
 
 task('watch', () => {
     gulp.watch('./pages/*', ['compile']);
-    gulp.watch('./components/*', ['compile']);
+    gulp.watch('./components/**/*', ['compile']);
     gulp.watch('./declarations/*', ['compile']);
     gulp.watch('./compile.js', ['compile']);
 
