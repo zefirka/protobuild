@@ -16,9 +16,12 @@ const utils = require('./utils/');
 const getScript = utils.getScript;
 const getLink = utils.getLink;
 const read = utils.read;
-const trim = utils.trim;
 const readDir = utils.readDir;
 const getStat = utils.getStat;
+const comment = utils.comment;
+const transformData = utils.transformData;
+const getParamsFromString = utils.getParamsFromString;
+const guid = utils.guid;
 
 readDir('../pages', true).then(function (pages) {
     pages.forEach(function (pageName) {
@@ -33,7 +36,13 @@ readDir('../pages', true).then(function (pages) {
             css: css,
         }, pageJson.data);
 
-        let page = interpolate(entry, data);
+        let page = null;
+
+        try {
+            page = interpolate(entry, data);
+        } catch (error) {
+            throw new Error(error);
+        }
 
         page = beautify(page, {
             indent_size: 2
@@ -43,14 +52,12 @@ readDir('../pages', true).then(function (pages) {
             if (err) {
                 throw new Error(err);
             }
+            console.log(`Page ${pageJson.name} successfully compiled!`);
         });
     });
+}).catch(error => {
+    console.error(error);
 });
-
-function guid() {
-    const salt = new Array(3).join('.').split('.').map(() => Math.random() * 100 >> 0).join('-');
-    return `_g${String(Date.now()).slice(-6)}-${salt}`;
-}
 
 function interpolate(str, data) {
     data = data || {};
@@ -78,7 +85,7 @@ function interpolate(str, data) {
     }, {});
 
     let newMaps = parsed.match(searchRegEx) || [];
-    let transformedData = getTransformedData(data, aliases);
+    let transformedData = transformData(data, aliases);
 
     let interpolationData = Object.assign({}, transformedData, newMaps.reduce(function (map, component) {
         let componentName = component.slice(2, -1);
@@ -129,18 +136,6 @@ function interpolate(str, data) {
     return inject(parsed, {regex: parseRegEx, keys: interpolationData});
 }
 
-function getTransformedData(data, maps) {
-    maps = revert(maps);
-    return Object.keys(data).reduce((obj, dataKey) => {
-        let value = data[dataKey];
-        if (maps[dataKey]) {
-            dataKey = maps[dataKey];
-        }
-        obj[dataKey] = value;
-        return obj;
-    }, {});
-}
-
 function compileComponent(name, data, componentParams) {
     let markup = '';
     let stat = null;
@@ -179,7 +174,7 @@ function compileComponent(name, data, componentParams) {
 function getComponentParams(component) {
     const reg = /[\w\:,\=\-\s]+/g;
     const maps = uniq(component.match(reg) || []);
-    const t = paramify(maps, true);
+    const t = getParamsFromString(maps, true);
     return t[Object.keys(t).pop()];
 }
 
@@ -187,47 +182,6 @@ function getParams(str) {
     const reg = /\$\{[\w\:,\=\-\s]+\}/g;
     const maps = uniq(str.match(reg) || []);
 
-    return paramify(maps);
+    return getParamsFromString(maps);
 }
 
-function paramify(maps, component) {
-    return maps.reduce(function (tplParams, map) {
-        if (contains(map, ':')) {
-            let data;
-            if (component) {
-                data = map.split(':');
-            } else {
-                data = map.slice(2, -1).split(':');
-            }
-
-            let name = data[0];
-            let paramString = data[1];
-
-            let params = paramString
-                .split(',')
-                .map(trim)
-                .reduce((stp, eq) => {
-                    let d = eq.split('=').map(trim);
-                    stp[d[0]] = d[1];
-                    return stp;
-                }, {});
-
-            Object.assign(tplParams, {
-                [name]: params
-            });
-        }
-        return tplParams;
-    }, {});
-}
-
-function comment(name, type, src, desc) {
-    return `<!-- ${type}: ${name} ## ${src} ${desc || ''} -->
-`;
-}
-
-function revert(params) {
-    return Object.keys(params).reduce(function (sum, name) {
-        sum[params[name]] = name;
-        return sum;
-    }, {});
-}
