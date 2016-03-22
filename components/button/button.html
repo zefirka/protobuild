@@ -1,5 +1,5 @@
 ${container-start}
-	<${tag || 'span'} class="b-button btn ${type}">
-		${text || "The default text"}
-	</${tag || 'span'}>
+    <${tag || span} type="${typeAttr || ''}" class="b-button btn ${type}">
+        ${text || "The default text"}
+    </${tag || span}>
 ${container-end}

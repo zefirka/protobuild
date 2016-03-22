@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const join = require('path').join;
+const toArray = require('lodash').toArray;
 
 module.exports = {
     read,
@@ -9,14 +10,36 @@ module.exports = {
     getStat
 };
 
-function read(url) {
-    return fs.readFileSync(join(__dirname, '../', url), 'utf-8');
+function promisify(async) {
+    const args = toArray(arguments).slice(1);
+    return new Promise(function (resolve, reject) {
+        async.apply(null, args.concat(function (err, data) {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(data);
+        }));
+    });
 }
 
-function readDir(dir) {
-    return fs.readdirSync(join(__dirname, dir));
+function read(url, async) {
+    const adr = join(__dirname, '../', url);
+    return async ?
+        promisify(fs.readFile, adr, 'utf-8') :
+        fs.readFileSync(adr, 'utf-8');
 }
 
-function getStat(dir) {
-    return fs.statSync(join(__dirname, dir));
+function readDir(dir, async) {
+    const adr = join(__dirname, dir);
+    return async ?
+        promisify(fs.readdir, adr) :
+        fs.readdirSync(adr);
+}
+
+function getStat(dir, async) {
+    const adr = join(__dirname, dir);
+    return async ?
+        promisify(fs.stat, dir) :
+        fs.statSync(adr);
 }

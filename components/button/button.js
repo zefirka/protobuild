@@ -7,7 +7,7 @@ const getMods = require('../../utils/bem').getMods;
 
 module.exports = function (params) {
     const container = params.container;
-    const mods = omit(params, ['container']);
+    const mods = omit(params, ['container', 'typeAttr', 'type']);
     const css = getMods('b-popup-container', mods);
 
     return {

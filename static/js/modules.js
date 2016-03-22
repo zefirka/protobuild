@@ -12,7 +12,8 @@ module.exports = {
 var modules = {
     menu: require('./modules/menu'),
     popup: require('./modules/popup'),
-    trigger: require('./modules/trigger')
+    trigger: require('./modules/trigger'),
+    viewport: require('./modules/viewport')
 };
 
 function init() {
@@ -45,7 +46,11 @@ function argify(argv) {
         .map(trim)
         .reduce(function (args, arg) {
             var str = arg.split(':').map(trim);
-            args[str[0]] = str[1];
+            try {
+                args[str[0]] = JSON.parse(str[1]);
+            } catch (error) {
+                args[str[0]] = str[1];
+            }
             return args;
         }, {});
 }

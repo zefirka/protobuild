@@ -3,10 +3,10 @@
 const meta = require('../utils/meta');
 
 module.exports =  Object.assign({
-    name: 'about',
+    name: 'promo',
     entry: 'index',
     data: {
-        title: 'About',
+        title: 'Promo Page',
         layout: {
             header: {
                 button: {
