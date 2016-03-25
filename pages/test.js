@@ -1,14 +1,10 @@
 'use strict';
 
-const meta = require('../utils/meta');
+const page = require('../utils/page');
 
-module.exports =  Object.assign({
-    name: 'test',
-    entry: 'index',
-    data: {
-    	form: false,
-        title: 'Test page',
-        layout: false,
-        footer: false
-    }
-}, meta);
+module.exports =  page('test', 'Test page', {
+    form: false,
+    title: 'Test page',
+    layout: false,
+    footer: false
+});

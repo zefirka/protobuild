@@ -13,10 +13,16 @@ module.exports = {
     getStat: memoize(getStat)
 };
 
-function promisify(async) {
+/**
+ * @private
+ * @param {function} action
+ * @param {*} params[1-n]
+ * @return {Promise}
+ */
+function _promisify(action /* params */) {
     const args = toArray(arguments).slice(1);
     return new Promise((resolve, reject) => {
-        async.apply(null, args.concat((err, data) => {
+        action.apply(null, args.concat((err, data) => {
             if (err) {
                 reject(err);
             }
@@ -26,23 +32,41 @@ function promisify(async) {
     });
 }
 
+/**
+ * @public
+ * @param {string} dir
+ * @param {boolean} async
+ * @return {string|Promise}
+ */
 function read(url, async) {
     const adr = join(__dirname, '../', url);
     return async ?
-        promisify(fs.readFile, adr, 'utf-8') :
+        _promisify(fs.readFile, adr, 'utf-8') :
         fs.readFileSync(adr, 'utf-8');
 }
 
+/**
+ * @public
+ * @param {string} dir
+ * @param {boolean} async
+ * @return {string|Promise}
+ */
 function readDir(dir, async) {
     const adr = join(__dirname, dir);
     return async ?
-        promisify(fs.readdir, adr) :
+        _promisify(fs.readdir, adr) :
         fs.readdirSync(adr);
 }
 
+/**
+ * @public
+ * @param {string} dir
+ * @param {boolean} async
+ * @return {string|Promise}
+ */
 function getStat(dir, async) {
     const adr = join(__dirname, dir);
     return async ?
-        promisify(fs.stat, dir) :
+        _promisify(fs.stat, dir) :
         fs.statSync(adr);
 }
