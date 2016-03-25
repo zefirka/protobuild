@@ -101,6 +101,14 @@ function interpolate(str, data) {
             component = component.split(':')[0].trim();
         }
 
+        /**
+         * In case of component's param default equals to 'false' should return empty string to not interpolate
+         */
+        if (componentParams.default === 'false' && !transformedData[component]) {
+            map[componentName] = '';
+            return map;
+        }
+
         let dataComponent = data[component];
 
         if (isUndefined(dataComponent) || dataComponent === true || typeof dataComponent === 'object') {

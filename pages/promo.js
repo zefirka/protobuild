@@ -3,7 +3,6 @@
 const page = require('../utils/page');
 
 module.exports =  page('promo', 'Promo Page', {
-    form: false,
     layout: {
         header: {
             button: {
