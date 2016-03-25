@@ -22,6 +22,7 @@ const comment = utils.comment;
 const transformData = utils.transformData;
 const getParamsFromString = utils.getParamsFromString;
 const guid = utils.guid;
+const report = utils.report;
 
 readDir('../pages', true).then(pages => {
     pages.forEach(pageName => {
@@ -51,7 +52,7 @@ readDir('../pages', true).then(pages => {
             if (err) {
                 throw new Error(err);
             }
-            console.log(`Page ${pageData.name} successfully compiled!`);
+            report(pageData);
         });
     });
 }).catch(error => {
@@ -59,6 +60,11 @@ readDir('../pages', true).then(pages => {
 });
 
 function interpolate(str, data) {
+    const stripData = stripComments(str);
+    const comments = stripData.comments;
+
+    str = stripData.str;
+
     data = data || {};
 
     const searchRegEx = /\$\{[\w\:,\=\-\s]+\}/g;
@@ -142,7 +148,9 @@ function interpolate(str, data) {
         return map;
     }, {}));
 
-    return inject(parsed, {regex: parseRegEx, keys: interpolationData});
+    let compiledString = inject(parsed, {regex: parseRegEx, keys: interpolationData});
+
+    return restripComments(compiledString, comments || []);
 }
 
 function compileComponent(name, data, componentParams) {
@@ -194,3 +202,26 @@ function getParams(str) {
     return getParamsFromString(maps);
 }
 
+function stripComments(str) {
+    let comments = [];
+    str = str.replace(/<!--.+-->/g, g => {
+        let id = '@comment' + guid();
+        comments.push({
+            [id]: g
+        });
+        return id;
+    });
+    return {
+        str,
+        comments
+    };
+}
+
+function restripComments(str, comments) {
+    comments.forEach(comment => {
+        let id = Object.keys(comment).pop();
+        let val = comment[id];
+        str = str.replace(id, val);
+    });
+    return str;
+}

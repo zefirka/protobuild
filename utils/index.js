@@ -6,6 +6,8 @@
  * @module utils/index
  */
 
+require('colors');
+
 const lodash = require('lodash');
 const contains = lodash.contains;
 
@@ -19,7 +21,8 @@ module.exports = Object.assign({
     trim,
     transformData,
     getParamsFromString,
-    guid
+    guid,
+    report
 }, html, fileSystem, staticUtils);
 
 /**
@@ -70,4 +73,8 @@ function transformData(data, maps) {
 function guid() {
     const salt = new Array(3).join('.').split('.').map(() => Math.random() * 100 >> 0).join('-');
     return `_g${String(Date.now()).slice(-6)}-${salt}`;
+}
+
+function report(data) {
+    console.log(`Page: ${data.name}. Build: ok: ./bundles/html/${data.name}.html\n`.green.underline);
 }

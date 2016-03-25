@@ -1,5 +1,7 @@
 'use strict';
 
+require('colors');
+
 const gulp = require('gulp');
 const browserify = require('gulp-browserify');
 const less = require('gulp-less');
