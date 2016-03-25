@@ -2,18 +2,21 @@
 
 const fs = require('fs');
 const join = require('path').join;
-const toArray = require('lodash').toArray;
+
+const lodash = require('lodash');
+const toArray = lodash.toArray;
+const memoize = lodash.memoize;
 
 module.exports = {
-    read,
-    readDir,
-    getStat
+    read: memoize(read),
+    readDir: memoize(readDir),
+    getStat: memoize(getStat)
 };
 
 function promisify(async) {
     const args = toArray(arguments).slice(1);
-    return new Promise(function (resolve, reject) {
-        async.apply(null, args.concat(function (err, data) {
+    return new Promise((resolve, reject) => {
+        async.apply(null, args.concat((err, data) => {
             if (err) {
                 reject(err);
             }

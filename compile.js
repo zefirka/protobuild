@@ -23,20 +23,19 @@ const transformData = utils.transformData;
 const getParamsFromString = utils.getParamsFromString;
 const guid = utils.guid;
 
-readDir('../pages', true).then(function (pages) {
-    pages.forEach(function (pageName) {
-        var pageJson = require(`./pages/${pageName}`);
-        let entry = read(`./declarations/${pageJson.entry}.html`);
+readDir('../pages', true).then(pages => {
+    pages.forEach(pageName => {
+        let page = null;
+        let pageData = require(`./pages/${pageName}`);
+        let entry = read(`./declarations/${pageData.entry}.html`);
 
-        let js = getScript(pageJson.js || []);
-        let css = getLink(pageJson.css || []);
+        let js = getScript(pageData.js);
+        let css = getLink(pageData.css);
 
         let data = Object.assign({
             js: js,
             css: css,
-        }, pageJson.data);
-
-        let page = null;
+        }, pageData.data);
 
         try {
             page = interpolate(entry, data);
@@ -45,14 +44,14 @@ readDir('../pages', true).then(function (pages) {
         }
 
         page = beautify(page, {
-            indent_size: 2
+            indent_size: 4
         });
 
-        fs.writeFile(`./bundles/html/${pageJson.name}.html`, page, function (err) {
+        fs.writeFile(`./bundles/html/${pageData.name}.html`, page, err => {
             if (err) {
                 throw new Error(err);
             }
-            console.log(`Page ${pageJson.name} successfully compiled!`);
+            console.log(`Page ${pageData.name} successfully compiled!`);
         });
     });
 }).catch(error => {
@@ -69,17 +68,18 @@ function interpolate(str, data) {
     let maps = uniq(str.match(searchRegEx) || []);
     let templateParams = getParams(str);
 
-    let aliases = maps.reduce(function (sum, map) {
+    let aliases = maps.reduce((sum, map) => {
         const interpolant = map.slice(2, -1);
         const name = interpolant.split(':')[0];
         let nova = name + guid();
+
         try {
             parsed = parsed.replace(map, '${' + nova + '}');
         } catch (err) {
-            console.log('---------->\n\n');
             console.log(err);
             throw err;
         }
+
         sum[nova] = interpolant;
         return sum;
     }, {});
@@ -88,9 +88,13 @@ function interpolate(str, data) {
     let transformedData = transformData(data, aliases);
 
     let interpolationData = Object.assign({}, transformedData, newMaps.reduce(function (map, component) {
-        let componentName = component.slice(2, -1);
-        component = aliases[componentName];
         let componentParams = {};
+        let decl;
+        let comp;
+        let src;
+        let componentName = component.slice(2, -1);
+
+        component = aliases[componentName];
 
         if (contains(component, ':')) {
             componentParams = getComponentParams(component);
@@ -98,9 +102,6 @@ function interpolate(str, data) {
         }
 
         let dataComponent = data[component];
-        let decl;
-        let comp;
-        let src;
 
         if (isUndefined(dataComponent) || dataComponent === true || typeof dataComponent === 'object') {
             let additionalData = {};

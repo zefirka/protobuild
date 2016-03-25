@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require('$');
+var $ = require('jQuery');
 
 module.exports = function (params) {
     var width = $(window).width();

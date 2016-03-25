@@ -7,6 +7,7 @@ module.exports =  Object.assign({
     entry: 'index',
     data: {
         title: 'Promo Page',
+        form: false,
         layout: {
             header: {
                 button: {

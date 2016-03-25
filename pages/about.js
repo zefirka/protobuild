@@ -3,6 +3,7 @@
 const page = require('../utils/page');
 
 module.exports =  page('about', 'About', {
+    form: false,
     layout: {
         header: {
             button: {
