@@ -40,6 +40,16 @@ module.exports =  page('index', 'Index', {
     layout: {
         header: {
             logo: false
+        },
+        nav: {
+            itemClassName: 'b-nav__item',
+            items: [
+                {text: 'О компании'},
+                {text: 'Услуги'},
+                {text: 'Цены'},
+                {text: 'Галерея работ'},
+                {text: 'Контакты'}
+            ]
         }
     },
     footer: {

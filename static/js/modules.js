@@ -42,7 +42,7 @@ function run(elem, update) {
 
 // data-module="menu" data-params="paramName: 20, paramName2: 30"
 function argify(argv) {
-    return argv.split(',')
+    return argv && argv.split(',')
         .map(trim)
         .reduce(function (args, arg) {
             var str = arg.split(':').map(trim);

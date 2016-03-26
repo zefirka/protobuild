@@ -1,6 +1,13 @@
 'use strict';
 
-module.exports = function (params) {
-    this.find('li').eq(Number(params.li) || 0).css('color', 'red');
-    return true;
+var bem = require('../bemify');
+
+module.exports = function () {
+    var nav = bem(this).block('b-nav');
+    var dropdownBtn = nav.find('.js-down');
+    var menu = nav.find('.b-nav__list');
+
+    dropdownBtn.click(function () {
+        menu.slideToggle();
+    });
 };

@@ -1,0 +1,40 @@
+@import '../mixins.less';
+
+.b-nav{
+	margin-bottom: 10px;
+	background: #65BBFF;
+
+
+	&_xs-header {
+		text-align: center;
+		padding: 8px 10px;
+	}
+
+	&__list {
+		background: #65BBFF;
+		display: table;
+		width: 100%;
+	}
+}
+
+
+.b-nav__item {
+	display: table-cell;
+	padding: 8px 10px;
+	text-align: center;
+
+	&:hover{
+		background: ;
+		background: #ADD9FF;
+	}
+}
+
+.xs {
+	.b-nav__list {
+		display: none;
+	}
+
+	.b-nav__item {
+		display: block;
+	}
+}

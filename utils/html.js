@@ -1,7 +1,5 @@
 'use strict';
 
-const join = require('path').join;
-
 module.exports = {
     getScript,
     getLink,
@@ -16,7 +14,7 @@ module.exports = {
 function getScript(js) {
     js = js || [];
     return js.map(function (adr) {
-        return `<script type="text/javascript" src="${join(__dirname, '../', adr)}"></script>`;
+        return `<script type="text/javascript" src="${adr}"></script>`;
     }).join('\n');
 }
 
@@ -28,7 +26,7 @@ function getScript(js) {
 function getLink(css) {
     css = css || [];
     return css.map(function (adr) {
-        return `<link rel="stylesheet" href="${join(__dirname, '../', adr)}"></link>`;
+        return `<link rel="stylesheet" href="${adr}"></link>`;
     }).join('\n');
 }
 
