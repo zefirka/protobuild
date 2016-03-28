@@ -1,15 +1,12 @@
 'use strict';
 
-const page = require('../utils/page').page;
+const markup = require('../utils/page');
+const page = markup.page;
+const header = markup.header;
+const nav = markup.nav;
 
 module.exports =  page('about', 'About', {
-    layout: {
-        header: {
-            button: {
-                text: 'Test message',
-                type: 'btn-danger'
-            }
-        }
-    },
+    header: header(),
+    nav: nav(),
     footer: true
 });

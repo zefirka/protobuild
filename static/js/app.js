@@ -1,6 +1,8 @@
 'use strict';
 
 var $ = require('jQuery');
+require('./bemify');
+
 var modules = require('./modules');
 
 $(function () {

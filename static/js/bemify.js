@@ -20,6 +20,11 @@ var API = {
 
     block: function (name) {
         var block = this[0];
+
+        if (block._block) {
+            return block._block;
+        }
+
         block._block = name;
         block.mods = getMods(block.classList);
         return this;
@@ -57,10 +62,26 @@ var API = {
         }
 
         return this;
+    },
+
+    hasMod: function (modName) {
+        var block = this[0];
+
+        return Boolean(block.mods[modName]);
+    },
+
+    elem: function (elem) {
+        return this.find('.' + this.block() + '__' + elem);
     }
 };
 
-module.exports = function (jq) {
-    Object.assign(jq.constructor.prototype, API);
+function bemify(jq) {
+    Object.assign(jq, API);
     return jq;
-};
+}
+
+(function (factory) {
+    module.exports = factory(require('jquery'));
+}(function ($) {
+    bemify($.fn);
+}));

@@ -64,3 +64,32 @@ module.exports.header = function () {
         }
     };
 };
+
+module.exports.nav = function (listClassName, itemClassName) {
+    return {
+        className: listClassName || 'b-nav__list',
+        itemClassName: itemClassName || 'b-nav__item',
+        items: [
+            {
+                text: 'О компании',
+                src: 'about.html'
+            },
+            {
+                text: 'Услуги',
+                src: 'services.html'
+            },
+            {
+                text: 'Цены',
+                src: 'prices.html'
+            },
+            {
+                text: 'Галерея работ',
+                src: 'gallery.html'
+            },
+            {
+                text: 'Контакты',
+                src: 'contacts.html'
+            }
+        ]
+    };
+};

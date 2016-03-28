@@ -3,7 +3,8 @@
 var $ = require('jQuery');
 
 module.exports = function (params) {
-    var width = $(window).width();
+    var $window = $(window);
+    var width = $window.width();
     var body = this;
 
     var ranges = getRanges(params);
@@ -13,7 +14,7 @@ module.exports = function (params) {
 
     updateClass(body, className, classNames);
 
-    $(window).resize(function () {
+    $window.resize(function () {
         width = $(this).width();
         className = getClassName(width, sizes, ranges);
         updateClass(body, className, classNames);

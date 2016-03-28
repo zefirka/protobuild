@@ -27,13 +27,19 @@ module.exports = Object.assign({
 
 /**
  * @public
- * @param {string[string-like]} x
+ * @param {string|array} x
  * @return string
  */
 function trim(x) {
     return x.tirm ? x.trim() : ''.trim.call(x);
 }
 
+/**
+ * @public
+ * @param {array} maps
+ * @param {boolean} isComponent
+ * @return {object}
+ */
 function getParamsFromString(maps, isComponent) {
     return maps.reduce(function (tplParams, map) {
         if (contains(map, ':')) {
@@ -46,7 +52,13 @@ function getParamsFromString(maps, isComponent) {
                 .map(trim)
                 .reduce((stp, eq) => {
                     let d = eq.split('=').map(trim);
-                    stp[d[0]] = d[1];
+                    let value;
+                    try {
+                        value = JSON.parse(d[1]);
+                    } catch (e) {
+                        value = d[1];
+                    }
+                    stp[d[0]] = value;
                     return stp;
                 }, {});
 
@@ -58,6 +70,12 @@ function getParamsFromString(maps, isComponent) {
     }, {});
 }
 
+/**
+ * @public
+ * @param {object} data
+ * @param {object} maps
+ * @return {object}
+ */
 function transformData(data, maps) {
     maps = reverseObject(maps);
     return Object.keys(data).reduce((obj, dataKey) => {
@@ -70,11 +88,22 @@ function transformData(data, maps) {
     }, {});
 }
 
-function guid() {
-    const salt = new Array(3).join('.').split('.').map(() => Math.random() * 100 >> 0).join('-');
+/**
+ * @public
+ * @param {number} l
+ * @return {string}
+ */
+function guid(l) {
+    const salt = new Array(l || 3).join('.').split('.').map(() => Math.random() * 100 >> 0).join('-');
     return `_g${String(Date.now()).slice(-6)}-${salt}`;
 }
 
+/**
+ * Reporter
+ *
+ * @public
+ * @param {object} data
+ */
 function report(data) {
     console.log(`Page: ${data.name}. Build: ok: ./bundles/html/${data.name}.html\n`.green.underline);
 }

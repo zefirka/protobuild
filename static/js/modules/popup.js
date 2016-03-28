@@ -3,13 +3,11 @@
 var channel = require('../channel');
 var stream = channel.popup;
 
-var bem = require('../bemify');
-
 module.exports = function (params) {
     var popup = null;
     var timeout = 100;
 
-    popup = bem(this).block('b-popup');
+    popup = this.block('b-popup');
 
     timeout = params.timeout || timeout;
 
