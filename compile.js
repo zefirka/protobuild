@@ -67,7 +67,7 @@ function interpolate(str, data) {
 
     data = data || {};
 
-    const searchRegEx = /\$\{[\w\:,\=\-\s\.\"\']+\}/g;
+    const searchRegEx = /\$\{[\w\:,\=\#\[\]\-\s\.\"\']+\}/g;
     const parseRegEx = /\$\{(.+?)(\:.+\}|\})/g;
 
     let parsed = str;
@@ -189,14 +189,14 @@ function compileComponent(name, data, componentParams) {
 }
 
 function getComponentParams(component) {
-    const reg = /[\w\:,\=\-\s\.\"\']+/g;
+    const reg = /[\w\:,\=\-\#\[\]\s\.\"\']+/g;
     const maps = uniq(component.match(reg) || []);
     const t = getParamsFromString(maps, true);
     return t[Object.keys(t).pop()];
 }
 
 function getParams(str) {
-    const reg = /\$\{[\w\:,\=\-\s\.\"\']+\}/g;
+    const reg = /\$\{[\w\:,\=\-\#\[\]\s\.\"\']+\}/g;
     const maps = uniq(str.match(reg) || []);
 
     return getParamsFromString(maps);

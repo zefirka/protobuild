@@ -14,3 +14,19 @@
 	transition: none !important;
 	-webkit-filter: blur(10px);
 }
+
+
+html, body {
+  height: 100%;
+}
+
+.b-page {
+  min-height: 100%;
+  margin-bottom: -@footer-full-height; 
+}
+
+.b-page:after {
+  content: '';
+  display: block;
+  height: @footer-full-height; 
+}

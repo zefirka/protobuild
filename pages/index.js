@@ -52,9 +52,25 @@ module.exports =  page('index', 'Index', {
         ]
     },
     footer: {
+        itemClassName: 'b-footer__item',
         footerItems: [
             {text: 'Allah'},
             {text: 'Akbar'}
-        ]
+        ],
+        footerTable: {
+            rows: [
+                [
+                    {
+                        queries: {
+                            md:12,
+                            sm:12,
+                            xs:12,
+                            lg:12,
+                        },
+                        data: '${list:items=footerItems, template=simple, className=b-footer__list}'
+                    }
+                ]
+            ]
+        }
     },
 });

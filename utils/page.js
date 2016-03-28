@@ -34,25 +34,26 @@ module.exports.header = function () {
                 [
                     {
                         queries: {
-                            md: 3,
-                            lg: 3,
-                            hidden: ['xs', 'sm']
+                            md: 4,
+                            lg: 4,
+                            sm: 2,
+                            hidden: ['xs']
                         },
                         data: '<h1>${title}</h1>'
                     },
                     {
                         queries: {
-                            md: 3,
-                            lg: 3,
-                            sm: 6,
+                            md: 4,
+                            lg: 4,
+                            sm: 4,
                             hidden: ['xs']
                         },
                         data: '${logo}'
                     },
                     {
                         queries: {
-                            md: 6,
-                            lg: 6,
+                            md: 4,
+                            lg: 4,
                             sm: 6,
                             xs: 12
                         },
