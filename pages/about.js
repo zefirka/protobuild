@@ -1,6 +1,6 @@
 'use strict';
 
-const page = require('../utils/page');
+const page = require('../utils/page').page;
 
 module.exports =  page('about', 'About', {
     layout: {

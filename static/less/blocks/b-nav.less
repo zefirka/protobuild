@@ -1,40 +1,74 @@
 @import '../mixins.less';
 
-.b-nav{
-	margin-bottom: 10px;
-	background: #65BBFF;
-
-
-	&_xs-header {
-		text-align: center;
-		padding: 8px 10px;
-	}
-
-	&__list {
-		background: #65BBFF;
-		display: table;
-		width: 100%;
+.is-sticky {
+	.b-nav,
+	.b-nav__list,
+	.b-nav__item {
+		z-index: 10;
 	}
 }
 
+.b-nav{
+	margin-bottom: 10px;
+	background: #2B76B2;
 
-.b-nav__item {
-	display: table-cell;
-	padding: 8px 10px;
-	text-align: center;
+	&_xs-header {
+		text-align: center;
+		position: relative;
+		padding: 8px 10px;
+		color: white;
+	}
 
-	&:hover{
-		background: ;
-		background: #ADD9FF;
+	&__list {
+		background: #2B76B2;
+		display: table;
+		width: 100%;
+	}
+
+	&__dropdown {
+		padding: 8px;
+		border: solid 1px white;
+		border-radius: 5px;
+		cursor: pointer;
+		position: absolute;
+		right: 10px;
+		top: 2px;
+		transition: transform 0.3s 0.05s;
+
+		&_up {
+			transform: rotate(180deg)
+		}
+	}
+
+
+	&__item {
+		display: table-cell;
+		padding: 8px 10px;
+		text-align: center;
+		color: white;
+
+		&:hover{
+			background: ;
+			background:  #5D91BB;;
+		}
 	}
 }
 
 .xs {
+	.b-nav {
+		position: relative;
+	}
 	.b-nav__list {
+		position: absolute;
+		z-index: 10;
 		display: none;
 	}
 
 	.b-nav__item {
 		display: block;
 	}
+}
+
+.sm .b-nav__list, .md .b-nav__list, .lg .b-nav__list {
+	display: table !important;
 }

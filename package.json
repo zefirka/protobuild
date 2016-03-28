@@ -28,6 +28,7 @@
     "colors": "^1.1.2",
     "gulp-less": "^3.0.5",
     "jquery": "^1.11.3",
+    "jquery-sticky": "^1.0.3",
     "js-beautify": "^1.6.2"
   }
 }

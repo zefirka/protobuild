@@ -10,7 +10,7 @@ const meta = {
     ]
 };
 
-module.exports = function (name, title, data) {
+module.exports.page = function (name, title, data) {
     data = Object.assign({
         title: title
     }, data);
@@ -20,4 +20,46 @@ module.exports = function (name, title, data) {
         entry: data.entry || 'index',
         data
     }, meta);
+};
+
+module.exports.header = function () {
+    return {
+        contacts: {
+            button: {
+                text: 'Заказать обратный звонок'
+            }
+        },
+        table: {
+            rows: [
+                [
+                    {
+                        queries: {
+                            md: 3,
+                            lg: 3,
+                            hidden: ['xs', 'sm']
+                        },
+                        data: '<h1>${title}</h1>'
+                    },
+                    {
+                        queries: {
+                            md: 3,
+                            lg: 3,
+                            sm: 6,
+                            hidden: ['xs']
+                        },
+                        data: '${logo}'
+                    },
+                    {
+                        queries: {
+                            md: 6,
+                            lg: 6,
+                            sm: 6,
+                            xs: 12
+                        },
+                        data: '${contacts}'
+                    }
+                ]
+            ]
+        }
+    };
 };
