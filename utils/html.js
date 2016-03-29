@@ -1,9 +1,13 @@
 'use strict';
 
+const guid = require('./static').guid;
+
 module.exports = {
     getScript,
     getLink,
-    comment
+    comment,
+    stripComments,
+    restripComments
 };
 
 /**
@@ -40,4 +44,39 @@ function getLink(css) {
  */
 function comment(name, type, src, desc) {
     return `<!-- ${type}: ${name} ## ${src} ${desc || ''} -->\n`;
+}
+
+/**
+ * @public
+ * @param {string} str
+ * @return {object}
+ */
+function stripComments(str) {
+    let comments = [];
+    str = str.replace(/<!--.+-->/g, g => {
+        let id = '@comment' + guid();
+        comments.push({
+            [id]: g
+        });
+        return id;
+    });
+    return {
+        str,
+        comments
+    };
+}
+
+/**
+ * @public
+ * @param {string} str
+ * @param {array} comments
+ * @return {string}
+ */
+function restripComments(str, comments) {
+    comments.forEach(comment => {
+        let id = Object.keys(comment).pop();
+        let val = comment[id];
+        str = str.replace(id, val);
+    });
+    return str;
 }

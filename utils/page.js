@@ -65,7 +65,7 @@ module.exports.header = function () {
     };
 };
 
-module.exports.nav = function (listClassName, itemClassName) {
+module.exports.nav = function (active, listClassName, itemClassName) {
     return {
         className: listClassName || 'b-nav__list',
         itemClassName: itemClassName || 'b-nav__item',

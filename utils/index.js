@@ -21,7 +21,6 @@ module.exports = Object.assign({
     trim,
     transformData,
     getParamsFromString,
-    guid,
     report
 }, html, fileSystem, staticUtils);
 
@@ -86,16 +85,6 @@ function transformData(data, maps) {
         obj[dataKey] = value;
         return obj;
     }, {});
-}
-
-/**
- * @public
- * @param {number} l
- * @return {string}
- */
-function guid(l) {
-    const salt = new Array(l || 3).join('.').split('.').map(() => Math.random() * 100 >> 0).join('-');
-    return `_g${String(Date.now()).slice(-6)}-${salt}`;
 }
 
 /**

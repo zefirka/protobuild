@@ -23,6 +23,8 @@ const transformData = utils.transformData;
 const getParamsFromString = utils.getParamsFromString;
 const guid = utils.guid;
 const report = utils.report;
+const stripComments = utils.stripComments;
+const restripComments = utils.restripComments;
 
 readDir('../pages', true).then(pages => {
     pages.forEach(pageName => {
@@ -200,28 +202,4 @@ function getParams(str) {
     const maps = uniq(str.match(reg) || []);
 
     return getParamsFromString(maps);
-}
-
-function stripComments(str) {
-    let comments = [];
-    str = str.replace(/<!--.+-->/g, g => {
-        let id = '@comment' + guid();
-        comments.push({
-            [id]: g
-        });
-        return id;
-    });
-    return {
-        str,
-        comments
-    };
-}
-
-function restripComments(str, comments) {
-    comments.forEach(comment => {
-        let id = Object.keys(comment).pop();
-        let val = comment[id];
-        str = str.replace(id, val);
-    });
-    return str;
 }

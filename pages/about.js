@@ -7,6 +7,6 @@ const nav = markup.nav;
 
 module.exports =  page('about', 'About', {
     header: header(),
-    nav: nav(),
+    nav: nav('about'),
     footer: true
 });
