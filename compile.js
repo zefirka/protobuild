@@ -64,15 +64,34 @@ readDir('../pages', true).then(pages => {
 });
 
 function interpolate(str, data, outherComponentParams) {
+    /* Regular Expression */
+    const templateRegEx = /#{template:[\s\w\-]+}([\s\w.<>\${}\/"\'\!\@\^\*\;.~:=-]+)#{\/template}/g;
+    const searchRegEx = /\$\{[\w\:,\=\#\[\]\-\s\.\"\']+\}/g;
+    const parseRegEx = /\$\{(.+?)(\:.+\}|\})/g;
+
+    let stringTemplates = {};
+
+    str = str.replace(templateRegEx, (template, body) => {
+        let desription = template.match(/#{template:\s?([\w\-]+)}/g);
+        let title = null;
+
+        if (desription) {
+            title = desription.pop().slice(2, -1).split(':').pop();
+        } else {
+            throw new Error(`Wrong template: ${template}`);
+        }
+
+        stringTemplates[title] = body;
+        return '';
+    });
+
+    /* Comments */
     const stripData = stripComments(str);
     const comments = stripData.comments;
 
     str = stripData.str;
 
-    data = data || {};
-
-    const searchRegEx = /\$\{[\w\:,\=\#\[\]\-\s\.\"\']+\}/g;
-    const parseRegEx = /\$\{(.+?)(\:.+\}|\})/g;
+    data = Object.assign({}, data || {}, stringTemplates);
 
     let parsed = str;
     let maps = uniq(str.match(searchRegEx) || []);
@@ -153,7 +172,10 @@ function interpolate(str, data, outherComponentParams) {
         return map;
     }, {}));
 
-    let compiledString = inject(parsed, {regex: parseRegEx, keys: interpolationData});
+    let compiledString = inject(parsed, {
+        regex: parseRegEx,
+        keys: interpolationData
+    });
 
     return restripComments(compiledString, comments || []);
 }

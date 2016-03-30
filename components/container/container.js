@@ -3,6 +3,8 @@
 const ROW = '<div class="row">${content}</div>';
 const COL = '<div class="${columns}">${content}</div>';
 
+const createColumn = require('../../utils/page').col;
+
 const lodash = require('lodash');
 const omit = lodash.omit;
 const get = lodash.get;
@@ -10,7 +12,20 @@ const get = lodash.get;
 const compileComponent = require('../../builder').compileComponent;
 
 module.exports = function  (params, data, interpolate) {
-    const containerData = get(data, params.data) || [];
+    let containerData = get(data, params.data) || [];
+
+    if (!containerData.length && params.content) {
+        const template = get(data, params.content) || '';
+        const readyTemplate = interpolate(template, data);
+
+        containerData = {
+            rows: [
+                [
+                    createColumn().data(readyTemplate)
+                ]
+            ]
+        };
+    }
 
     const content = containerData.rows.map(row => {
         const content = row.map(col => {
@@ -48,6 +63,7 @@ module.exports = function  (params, data, interpolate) {
     }).join('\n');
 
     return {
-        content
+        content,
+        css: params.css
     };
 };

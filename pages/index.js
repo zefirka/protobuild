@@ -7,6 +7,7 @@ const nav = markup.nav;
 const col = markup.col;
 
 module.exports =  page('index', 'Index', {
+    description: 'Главная страница',
     header: header(),
     nav: Object.assign(nav(), {
         breadcrumbs: 'Index'
