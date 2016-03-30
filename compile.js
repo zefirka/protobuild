@@ -17,7 +17,6 @@ const getScript = utils.getScript;
 const getLink = utils.getLink;
 const read = utils.read;
 const readDir = utils.readDir;
-const getStat = utils.getStat;
 const comment = utils.comment;
 const transformData = utils.transformData;
 const getParamsFromString = utils.getParamsFromString;
@@ -25,6 +24,9 @@ const guid = utils.guid;
 const report = utils.report;
 const stripComments = utils.stripComments;
 const restripComments = utils.restripComments;
+
+const protobuilder = require('./builder');
+const compileComponent = protobuilder.compileComponent;
 
 readDir('../pages', true).then(pages => {
     pages.forEach(pageName => {
@@ -61,7 +63,7 @@ readDir('../pages', true).then(pages => {
     console.error(error);
 });
 
-function interpolate(str, data) {
+function interpolate(str, data, outherComponentParams) {
     const stripData = stripComments(str);
     const comments = stripData.comments;
 
@@ -96,7 +98,7 @@ function interpolate(str, data) {
     let transformedData = transformData(data, aliases);
 
     let interpolationData = Object.assign({}, transformedData, newMaps.reduce(function (map, component) {
-        let componentParams = {};
+        let componentParams = outherComponentParams || {};
         let decl;
         let comp;
         let src;
@@ -137,7 +139,8 @@ function interpolate(str, data) {
             try {
                 comp = compileComponent(component,
                     Object.assign({}, data, additionalData),
-                    Object.assign({}, templateParams[component], componentParams));
+                    Object.assign({}, templateParams[component], componentParams),
+                    interpolate);
             } catch (e) {}
 
             map[componentName] = decl || comp || '';
@@ -153,41 +156,6 @@ function interpolate(str, data) {
     let compiledString = inject(parsed, {regex: parseRegEx, keys: interpolationData});
 
     return restripComments(compiledString, comments || []);
-}
-
-function compileComponent(name, data, componentParams) {
-    let markup = '';
-    let stat = null;
-    let summaryData = Object.assign({}, data);
-
-    try {
-        stat = getStat(`../components/${name}`);
-
-        if (stat.isDirectory()) {
-            let files = readDir(`../components/${name}`);
-            let index = contains(files, `${name}.html`);
-            let hasJs = contains(files, `${name}.js`);
-            let compiler;
-            let src;
-
-            if (!index) {
-                console.error('no index');
-                return null;
-            }
-
-            if (hasJs) {
-                compiler = require(`./components/${name}/${name}.js`);
-                src = `./components/${name}/${name}.html`;
-                markup = read(src);
-                markup = comment(name, 'component', src, 'start') + markup + comment(name, 'component', src, 'end');
-                Object.assign(summaryData, componentParams, compiler(componentParams, summaryData, interpolate));
-                return interpolate(markup, summaryData);
-            }
-        }
-    } catch (error) {
-        markup = read(`./components/${name}.html`);
-        return interpolate(markup, Object.assign(summaryData, componentParams));
-    }
 }
 
 function getComponentParams(component) {

@@ -1,6 +1,6 @@
 'use strict';
 
-const meta = {
+const META = {
     js: [
         '../../bundles/js/app.js'
     ],
@@ -9,6 +9,14 @@ const meta = {
         '../../bundles/css/index.css'
     ]
 };
+
+const NAV_PAGES = [
+	['О компании', 'about'],
+	['Услуги', 'services'],
+	['Цены', 'prices'],
+	['Галерея работ', 'gallery'],
+	['Контакты', 'contacts']
+];
 
 module.exports.page = function (name, title, data) {
     data = Object.assign({
@@ -19,7 +27,7 @@ module.exports.page = function (name, title, data) {
         name: name,
         entry: data.entry || 'index',
         data
-    }, meta);
+    }, META);
 };
 
 module.exports.header = function () {
@@ -69,27 +77,52 @@ module.exports.nav = function (active, listClassName, itemClassName) {
     return {
         className: listClassName || 'b-nav__list',
         itemClassName: itemClassName || 'b-nav__item',
-        items: [
-            {
-                text: 'О компании',
-                src: 'about.html'
-            },
-            {
-                text: 'Услуги',
-                src: 'services.html'
-            },
-            {
-                text: 'Цены',
-                src: 'prices.html'
-            },
-            {
-                text: 'Галерея работ',
-                src: 'gallery.html'
-            },
-            {
-                text: 'Контакты',
-                src: 'contacts.html'
-            }
-        ]
+        items: NAV_PAGES.map(page => {
+            return {
+                text: page[0],
+                src: `${page[1]}.html`,
+                active: active === page[1]
+            };
+        })
+    };
+};
+
+module.exports.col = function (xs, sm, md, lg) {
+    if (arguments.length === 0) {
+        xs = 12;
+        sm = 12;
+        md = 12;
+        lg = 12;
+    } else
+    if (arguments.length === 1) {
+        md = arguments[0];
+        xs = 12;
+        sm = 12;
+        lg = 12;
+    } else
+    if (arguments.length === 2) {
+        xs = arguments[0];
+        sm = arguments[0];
+        md = arguments[1];
+        lg = arguments[1];
+    }else {
+        xs = xs || 12;
+        sm = sm || 12;
+        md = md || 12;
+        lg = lg || 12;
+    }
+
+    return {
+        data: data => {
+            return {
+                queries: {
+                    xs,
+                    sm,
+                    md,
+                    lg
+                },
+                data: data
+            };
+        }
     };
 };

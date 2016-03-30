@@ -5,8 +5,9 @@ const page = markup.page;
 const header = markup.header;
 const nav = markup.nav;
 
-module.exports =  page('services', 'Services', {
+module.exports =  page('contacts', 'Contacts', {
     header: header(),
-    nav: nav('services'),
+    nav: nav('contacts'),
+    layout: {},
     footer: true
 });

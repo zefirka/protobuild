@@ -4,10 +4,13 @@ const markup = require('../utils/page');
 const page = markup.page;
 const header = markup.header;
 const nav = markup.nav;
+const col = markup.col;
 
 module.exports =  page('index', 'Index', {
     header: header(),
-    nav: nav(),
+    nav: Object.assign(nav(), {
+        breadcrumbs: 'Index'
+    }),
     footer: {
         itemClassName: 'b-footer__item',
         footerItems: [
@@ -17,19 +20,33 @@ module.exports =  page('index', 'Index', {
         footerTable: {
             rows: [
                 [
-                    {
-                        queries: {
-                            md:12,
-                            sm:12,
-                            xs:12,
-                            lg:12,
-                        },
-                        data: '${list:items=footerItems, template=simple, className=b-footer__list}'
-                    }
+                    col().data({
+                        component: 'list',
+                        params: {
+                            items: 'footerItems',
+                            template: 'simple',
+                            className: 'b-footer__list'
+                        }
+                    })
                 ]
             ]
         }
     },
+    layout: {
+        indexTable: {
+            rows: [
+                [
+                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#FF87A5', height: 100}}),
+                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#8FFFF4', height: 100}}),
+                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#6AFF92', height: 100}}),
+                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#83FF2F', height: 100}}),
+                ]
+            ]
+        },
+        page: {
+            value: 'pages/main',
+        }
+    }
 });
 
 // form: {

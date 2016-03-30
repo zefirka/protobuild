@@ -57,6 +57,10 @@
 		}
 	}
 
+	.b-list__item_acitve{
+		background: #4CC1ED
+	}
+
 	.b-link {
 		color: white;
 	}
@@ -65,16 +69,22 @@
 .xs {
 	.b-nav {
 		position: relative;
-	}
-	.b-nav__list {
-		position: absolute;
-		z-index: 10;
-		display: none;
+	
+		&__list {
+			position: absolute;
+			z-index: 10;
+			display: none;
+		}
+
+		&__item {
+			display: block;
+		}
+
+		.b-list__item_acitve{ 
+			display: none;
+		}
 	}
 
-	.b-nav__item {
-		display: block;
-	}
 }
 
 .sm .b-nav__list, .md .b-nav__list, .lg .b-nav__list {

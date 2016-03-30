@@ -24,6 +24,10 @@ module.exports = function (params, data, interpolate) {
             item['link-end'] = LINK_END;
         }
 
+        if (item.active) {
+            item.mods = 'b-list__item_acitve';
+        }
+
         return interpolate(templateHtml, Object.assign({}, data, item)) ;
     }).join('\n');
 

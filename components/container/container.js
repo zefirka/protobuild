@@ -7,6 +7,8 @@ const lodash = require('lodash');
 const omit = lodash.omit;
 const get = lodash.get;
 
+const compileComponent = require('../../builder').compileComponent;
+
 module.exports = function  (params, data, interpolate) {
     const containerData = get(data, params.data) || [];
 
@@ -15,6 +17,7 @@ module.exports = function  (params, data, interpolate) {
             const queries = col.queries;
             const hiddens = queries.hidden || [];
             const cols = omit(queries, ['hidden']);
+            let content;
 
             let columns = Object.keys(cols).reduce((str, col) => {
                 let colVal = cols[col];
@@ -27,9 +30,17 @@ module.exports = function  (params, data, interpolate) {
                 return str;
             }, '') || '';
 
+            let columnData = '';
+
+            if (typeof col.data === 'string') {
+                columnData = col.data;
+            } else {
+                content = compileComponent(col.data.component, data, col.data.params, interpolate);
+            }
+
             return interpolate(COL, {
                 columns: `${columns} ${hd}`,
-                content: interpolate(col.data || '', data)
+                content: content || interpolate(columnData || '', data)
             });
         }).join('\n');
 
