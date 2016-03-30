@@ -65,7 +65,7 @@ readDir('../pages', true).then(pages => {
 
 function interpolate(str, data, outherComponentParams) {
     /* Regular Expression */
-    const templateRegEx = /#{template:[\s\w\-]+}([\s\w.<>\${}\/"\'\!\@\^\*\;.~:=-]+)#{\/template}/g;
+    const templateRegEx = /#{template:[\s\w\-]+}([\s\w.<>\${}\/"\'\!\@\^\*\;.~:=\-…\,а-яА-Я–]+)#{\/template}/g;
     const searchRegEx = /\$\{[\w\:,\=\#\[\]\-\s\.\"\']+\}/g;
     const parseRegEx = /\$\{(.+?)(\:.+\}|\})/g;
 
