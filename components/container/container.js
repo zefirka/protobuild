@@ -35,7 +35,7 @@ module.exports = function  (params, data, interpolate) {
             if (typeof col.data === 'string') {
                 columnData = col.data;
             } else {
-                content = compileComponent(col.data.component, data, col.data.params, interpolate);
+                content = compileComponent(col.data.component, data, col.data.params || {}, interpolate);
             }
 
             return interpolate(COL, {

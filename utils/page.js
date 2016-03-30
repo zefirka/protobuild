@@ -18,76 +18,14 @@ const NAV_PAGES = [
 	['Контакты', 'contacts']
 ];
 
-module.exports.page = function (name, title, data) {
-    data = Object.assign({
-        title: title
-    }, data);
+function col(xs, sm, md, lg) {
+    let hidden = [
+    xs === null ? 'xs' : null,
+    sm === null ? 'sm' : null,
+    md === null ? 'md' : null,
+    lg === null ? 'lg' : null
+    ].filter(Boolean);
 
-    return Object.assign({
-        name: name,
-        entry: data.entry || 'index',
-        data
-    }, META);
-};
-
-module.exports.header = function () {
-    return {
-        contacts: {
-            button: {
-                text: 'Заказать обратный звонок'
-            }
-        },
-        table: {
-            rows: [
-                [
-                    {
-                        queries: {
-                            md: 4,
-                            lg: 4,
-                            sm: 2,
-                            hidden: ['xs']
-                        },
-                        data: '<h1>${title}</h1>'
-                    },
-                    {
-                        queries: {
-                            md: 4,
-                            lg: 4,
-                            sm: 4,
-                            hidden: ['xs']
-                        },
-                        data: '${logo}'
-                    },
-                    {
-                        queries: {
-                            md: 4,
-                            lg: 4,
-                            sm: 6,
-                            xs: 12
-                        },
-                        data: '${contacts}'
-                    }
-                ]
-            ]
-        }
-    };
-};
-
-module.exports.nav = function (active, listClassName, itemClassName) {
-    return {
-        className: listClassName || 'b-nav__list',
-        itemClassName: itemClassName || 'b-nav__item',
-        items: NAV_PAGES.map(page => {
-            return {
-                text: page[0],
-                src: `${page[1]}.html`,
-                active: active === page[1]
-            };
-        })
-    };
-};
-
-module.exports.col = function (xs, sm, md, lg) {
     if (arguments.length === 0) {
         xs = 12;
         sm = 12;
@@ -119,10 +57,63 @@ module.exports.col = function (xs, sm, md, lg) {
                     xs,
                     sm,
                     md,
-                    lg
+                    lg,
+                    hidden
                 },
                 data: data
             };
         }
     };
+}
+
+function page(name, title, data) {
+    data = Object.assign({
+        title: title
+    }, data);
+
+    return Object.assign({
+        name: name,
+        entry: data.entry || 'index',
+        data
+    }, META);
+}
+
+function header() {
+    return {
+        contacts: {
+            button: {
+                text: 'Заказать обратный звонок'
+            }
+        },
+        table: {
+            rows: [
+                [
+                    col(null, 2, 4, 4).data('<h1>${title}</h1>'),
+                    col(null, 4, 4, 4).data('${logo}'),
+                    col(12,   6, 4, 4).data('${contacts}')
+                ]
+            ]
+        }
+    };
+}
+
+function nav(active, listClassName, itemClassName) {
+    return {
+        className: listClassName || 'b-nav__list',
+        itemClassName: itemClassName || 'b-nav__item',
+        items: NAV_PAGES.map(page => {
+            return {
+                text: page[0],
+                src: `${page[1]}.html`,
+                active: active === page[1]
+            };
+        })
+    };
+}
+
+module.exports = {
+    col,
+    nav,
+    header,
+    page
 };
