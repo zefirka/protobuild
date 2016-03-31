@@ -64,7 +64,7 @@ function compileComponent(name, data, componentParams, interpolate) {
 
 function importer(str, path) {
     const includeRegEx = /#include\s*['"]([-_\.\w\/\d]+)['"];\n/g;
-    const importRegEx = /#import\s*([\w\d\-_]+)\s*from\s*['"]([\.\w\/\d]+)['"];/g;
+    const importRegEx = /#import\s*([\w\d\-_\s,]+)\s*from\s*['"]([\.\w\/\d]+)['"];/g;
     return str.replace(includeRegEx, (template, url) => {
         const tpl = join(path.split('/').slice(0, -1).join('/'), url);
         let body;
@@ -76,15 +76,27 @@ function importer(str, path) {
         }
         return body;
     }).replace(importRegEx, (template, name, url) => {
+        let names = [];
+
+        if (contains(name, ',')) {
+            names = name.split(',').map(s => s.trim());
+        } else {
+            names = [name];
+        }
+
         const tpl = join(path.split('/').slice(0, -1).join('/'), url);
         let body;
+
         try {
             body = read(tpl);
         } catch (e) {
             console.log(e);
             return e;
         }
-        return getTemplatesFromBody(body)[name] || warning(`Template: "${name}" not found in ${tpl}`);
+
+        return names.map(tplName => {
+            return getTemplatesFromBody(body)[tplName] || warning(`Template: "${tplName}" not found in ${tpl}`);
+        }).join('\n');
     });
 }
 
