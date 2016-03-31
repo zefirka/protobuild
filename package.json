@@ -1,6 +1,6 @@
 {
   "name": "protobuilder",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "compile.js",
   "scripts": {
     "compile": "node compile.js",
