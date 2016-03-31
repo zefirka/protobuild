@@ -1,3 +1,9 @@
+#import a from './templates/common.html';
+
+#{template:body}
+	${block: bg=green, height=50}
+#{/template}
+
 <div class="b-logo">
-	${block: bg=#5F8CFF, height=50}
+	${wrap: name=body, container=a, href=index.html}
 </div>

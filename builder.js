@@ -81,7 +81,7 @@ function importer(str, path) {
         if (contains(name, ',')) {
             names = name.split(',').map(s => s.trim());
         } else {
-            names = [name];
+            names = [name.trim()];
         }
 
         const tpl = join(path.split('/').slice(0, -1).join('/'), url);
