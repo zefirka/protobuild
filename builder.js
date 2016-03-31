@@ -1,11 +1,16 @@
 'use strict';
 
-module.exports.compileComponent = compileComponent;
+module.exports = {
+    compileComponent,
+    importer
+};
 
 const fs = require('./utils/fileSystem');
 const read = fs.read;
 const getStat = fs.getStat;
 const readDir = fs.readDir;
+
+const join = require('path').join;
 
 const lodash = require('lodash');
 const contains = lodash.contains;
@@ -55,4 +60,58 @@ function compileComponent(name, data, componentParams, interpolate) {
 
         return interpolate(markup, Object.assign(summaryData, componentParams, src));
     }
+}
+
+function importer(str, path) {
+    const includeRegEx = /#include\s*['"]([-_\.\w\/\d]+)['"];\n/g;
+    const importRegEx = /#import\s*([\w\d\-_]+)\s*from\s*['"]([\.\w\/\d]+)['"];/g;
+    return str.replace(includeRegEx, (template, url) => {
+        const tpl = join(path.split('/').slice(0, -1).join('/'), url);
+        let body;
+        try {
+            body = read(tpl);
+        } catch (e) {
+            console.log(e);
+            return e;
+        }
+        return body;
+    }).replace(importRegEx, (template, name, url) => {
+        const tpl = join(path.split('/').slice(0, -1).join('/'), url);
+        let body;
+        try {
+            body = read(tpl);
+        } catch (e) {
+            console.log(e);
+            return e;
+        }
+        return getTemplatesFromBody(body)[name] || warning(`Template: "${name}" not found in ${tpl}`);
+    });
+}
+
+function getTemplatesFromBody(body) {
+    const templateRegEx = /#{template:[\s\w\-_]+}([\s\w.<>\${}\/"\'\!\@\^\*\;.~:=\-…\,а-яА-Я–]+)#{\/template}/g;
+
+    let tpls = {};
+    let matches = body.match(templateRegEx);
+    if (matches) {
+        tpls = matches.reduce((sum, match) => {
+            let name = match
+                .match(/#{template:([\w\d\-_]+)}/g)
+                .pop()
+                .slice(2, -1)
+                .split(':')
+                .pop();
+
+            sum[name] = match;
+            return sum;
+        }, {});
+    }
+    return tpls;
+}
+
+function warning(msg) {
+    return `
+    <div class="b-warning">
+        ${msg}
+    </div>`;
 }

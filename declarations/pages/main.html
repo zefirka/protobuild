@@ -1,7 +1,5 @@
-#{template:siteTitle}
-	<h1 style="text-align: center;">${description}</h1>
-#{/template}
+#import site-title from '../templates/title.html';
 
-${container: content=siteTitle}
+${container: content=site-title}
 
 ${container: data=indexTable}

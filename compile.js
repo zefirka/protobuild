@@ -6,8 +6,6 @@ const fs = require('fs');
 const inject = require('mexna');
 const beautify = require('js-beautify').html;
 
-const join = require('path').join;
-
 const lodash = require('lodash');
 const isUndefined = lodash.isUndefined;
 const isObject = lodash.isObject;
@@ -29,6 +27,7 @@ const restripComments = utils.restripComments;
 
 const protobuilder = require('./builder');
 const compileComponent = protobuilder.compileComponent;
+const importer = protobuilder.importer;
 
 readDir('../pages', true).then(pages => {
     pages.forEach(pageName => {
@@ -68,22 +67,11 @@ readDir('../pages', true).then(pages => {
 
 function interpolate(str, data, outherComponentParams, path) {
     /* Regular Expression */
-    const includeRegEx = /#include\s*['"]([\.\w\/\d]+)['"];\n/g;
     const templateRegEx = /#{template:[\s\w\-]+}([\s\w.<>\${}\/"\'\!\@\^\*\;.~:=\-…\,а-яА-Я–]+)#{\/template}/g;
     const searchRegEx = /\$\{[\w\:,\=\#\[\]\-\s\.\"\']+\}/g;
     const parseRegEx = /\$\{(.+?)(\:.+\}|\})/g;
 
-    str = str.replace(includeRegEx, (template, url) => {
-        const tpl = join(path.split('/').slice(0, -1).join('/'), url);
-        let body;
-        try {
-            body = read(tpl);
-        } catch (e) {
-            console.log(e);
-            return e;
-        }
-        return body;
-    });
+    str = importer(str, path);
 
     let stringTemplates = {};
 
