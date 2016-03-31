@@ -1,11 +1,20 @@
+#{template:callButton}
+	${button:tag=span, type=btn-primary}
+#{/template}
+
+#{template:caller}
+	<div data-module="trigger" data-params="channel: popup.reveal, value: feedback, elem: span">
+		${content}
+	</div>
+#{/template}
+
 <div class="b-contacts">
 
 	<div class="b-contacts__telephone">
 		<p>+7 (495) 666 66 23</p>
 		<p>+7 (499) 129 83 77</p>
 	</div>
-	<div data-module="trigger" data-params="channel: popup.reveal, value: feedback, elem: span">
-		${button:tag=span, type=btn-primary}
-	</div>
+	
+	${wrap: name=callButton, container=caller}
 
 </div>

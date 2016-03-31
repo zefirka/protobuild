@@ -2,7 +2,8 @@
 
 module.exports = {
     reverseObject,
-    guid
+    guid,
+    debounce
 };
 
 /**
@@ -25,6 +26,29 @@ function reverseObject(params) {
  * @return {string}
  */
 function guid(l) {
-    const salt = new Array(l || 3).join('.').split('.').map(() => Math.random() * 100 >> 0).join('-');
-    return `_g${String(Date.now()).slice(-6)}-${salt}`;
+    const salt = new Array(l || 3)
+        .join('.')
+        .split('.')
+        .map(function () {
+            return Math.random() * 100 >> 0;
+        })
+        .join('-');
+
+    return '_g' + String(Date.now()).slice(-6) + '-' + salt;
+}
+
+/**
+ * @public
+ * @param {function} fn
+ * @param {number} timeout
+ * @return {function}
+ */
+function debounce(fn, timeout) {
+    var t;
+    return function () {
+        if (t) {
+            clearTimeout(t);
+        }
+        t = setTimeout(fn, timeout);
+    };
 }

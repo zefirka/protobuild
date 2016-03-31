@@ -89,7 +89,7 @@ function header() {
             rows: [
                 [
                     col(null, 2, 4, 4).data('<h1>${title}</h1>'),
-                    col(null, 4, 4, 4).data('${logo}'),
+                    col(null, 4, 4, 4).data({decl: 'logo'}),
                     col(12,   6, 4, 4).data('${contacts}')
                 ]
             ]

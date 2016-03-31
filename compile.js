@@ -6,6 +6,8 @@ const fs = require('fs');
 const inject = require('mexna');
 const beautify = require('js-beautify').html;
 
+const join = require('path').join;
+
 const lodash = require('lodash');
 const isUndefined = lodash.isUndefined;
 const isObject = lodash.isObject;
@@ -32,7 +34,8 @@ readDir('../pages', true).then(pages => {
     pages.forEach(pageName => {
         let page = null;
         let pageData = require(`./pages/${pageName}`);
-        let entry = read(`./declarations/${pageData.entry}.html`);
+        const src = `./declarations/${pageData.entry}.html`;
+        let entry = read(src);
 
         let js = getScript(pageData.js);
         let css = getLink(pageData.css);
@@ -43,7 +46,7 @@ readDir('../pages', true).then(pages => {
         }, pageData.data);
 
         try {
-            page = interpolate(entry, data);
+            page = interpolate(entry, data, undefined, src);
         } catch (error) {
             throw new Error(error);
         }
@@ -63,11 +66,24 @@ readDir('../pages', true).then(pages => {
     console.error(error);
 });
 
-function interpolate(str, data, outherComponentParams) {
+function interpolate(str, data, outherComponentParams, path) {
     /* Regular Expression */
+    const includeRegEx = /#include\s*['"]([\.\w\/\d]+)['"];\n/g;
     const templateRegEx = /#{template:[\s\w\-]+}([\s\w.<>\${}\/"\'\!\@\^\*\;.~:=\-…\,а-яА-Я–]+)#{\/template}/g;
     const searchRegEx = /\$\{[\w\:,\=\#\[\]\-\s\.\"\']+\}/g;
     const parseRegEx = /\$\{(.+?)(\:.+\}|\})/g;
+
+    str = str.replace(includeRegEx, (template, url) => {
+        const tpl = join(path.split('/').slice(0, -1).join('/'), url);
+        let body;
+        try {
+            body = read(tpl);
+        } catch (e) {
+            console.log(e);
+            return e;
+        }
+        return body;
+    });
 
     let stringTemplates = {};
 
@@ -152,7 +168,7 @@ function interpolate(str, data, outherComponentParams) {
                 decl = read(src);
                 let newData = Object.assign({}, data, additionalData);
                 decl = comment(component, 'declaration', src) + decl;
-                decl = interpolate(decl, newData);
+                decl = interpolate(decl, newData, undefined, src);
             } catch (e) {}
 
             try {

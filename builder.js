@@ -39,18 +39,20 @@ function compileComponent(name, data, componentParams, interpolate) {
                 markup = read(src);
                 markup = comment(name, 'component', src, 'start') + markup + comment(name, 'component', src, 'end');
                 Object.assign(summaryData, componentParams, compiler(componentParams, summaryData, interpolate));
-                return interpolate(markup, summaryData);
+                return interpolate(markup, summaryData, undefined, src);
             }
         }
     } catch (error) {
-
+        let src;
         try {
-            markup = read(`./components/${name}.html`);
+            src = `./components/${name}.html`;
+            markup = read(src);
         } catch (e) {
-            markup = require(`./components/${name}.js`);
+            src = `./components/${name}.js`;
+            markup = require(src);
             markup = markup(componentParams, summaryData, interpolate);
         }
 
-        return interpolate(markup, Object.assign(summaryData, componentParams));
+        return interpolate(markup, Object.assign(summaryData, componentParams, src));
     }
 }

@@ -16,18 +16,31 @@ var modules = {
     viewport: require('./modules/viewport')
 };
 
+/**
+ * @public
+ */
 function init() {
     $(ATTR).each(function () {
         run(this, false);
     });
 }
 
+/**
+ * @public
+ * @param {jQuery} context
+ */
 function update(context) {
     $(ATTR, context).each(function () {
         run(this, true);
     });
 }
 
+/**
+ * @private
+ * @param {jQuery} elem
+ * @param {boolean} update
+ * @return {function}
+ */
 function run(elem, update) {
     var context = $(elem);
     var name = context.data('module');
@@ -40,7 +53,13 @@ function run(elem, update) {
     return elem.module;
 }
 
-// data-module="menu" data-params="paramName: 20, paramName2: 30"
+/**
+ * data-module="menu" data-params="paramName: 20, paramName2: 30"
+ *
+ * @private
+ * @param {string} argv
+ * @return {object}
+ */
 function argify(argv) {
     return argv && argv.split(',')
         .map(trim)

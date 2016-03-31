@@ -9,6 +9,8 @@ const lodash = require('lodash');
 const omit = lodash.omit;
 const get = lodash.get;
 
+const read = require('../../utils/fileSystem').read;
+
 const compileComponent = require('../../builder').compileComponent;
 
 module.exports = function  (params, data, interpolate) {
@@ -50,7 +52,13 @@ module.exports = function  (params, data, interpolate) {
             if (typeof col.data === 'string') {
                 columnData = col.data;
             } else {
-                content = compileComponent(col.data.component, data, col.data.params || {}, interpolate);
+                if (col.data.component) {
+                    content = compileComponent(col.data.component, data, col.data.params || {}, interpolate);
+                } else
+                if (col.data.decl) {
+                    const src = `./declarations/${col.data.decl}.html`;
+                    content = interpolate(read(src), data, undefined, src);
+                }
             }
 
             return interpolate(COL, {
