@@ -111,9 +111,43 @@ function nav(active, listClassName, itemClassName) {
     };
 }
 
+function form(caption) {
+    let struct = {
+        caption,
+        fields: []
+    };
+
+    let api = {
+        text: createInputType('text'),
+        email: createInputType('email'),
+        number: createInputType('number'),
+        password: createInputType('password'),
+        checkbox: createInputType('checkbox'),
+        radio: createInputType('radio'),
+        value: () => struct,
+        valueOf: () => struct
+    };
+
+    function createInputType(type) {
+        return (label, options) => {
+            options.checked = options.checked === true ? 'checked' : '';
+            struct.fields.push({
+                label: label,
+                input: Object.assign({
+                    type
+                }, options)
+            });
+            return api;
+        };
+    }
+
+    return api;
+}
+
 module.exports = {
     col,
     nav,
     header,
-    page
+    page,
+    form
 };

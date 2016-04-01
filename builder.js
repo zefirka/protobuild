@@ -100,6 +100,13 @@ function importer(str, path) {
     });
 }
 
+/**
+ * Get templates from text
+ *
+ * @private
+ * @param {string} body
+ * @return {object}
+ */
 function getTemplatesFromBody(body) {
     const templateRegEx = /#{template:[\s\w\-_]+}([\s\w.<>\${}\/"\'\!\@\^\*\;.~:=\-…\,а-яА-Я–]+)#{\/template}/g;
 

@@ -44,7 +44,7 @@ function getParamsFromString(maps, isComponent) {
         if (contains(map, ':')) {
             let data = isComponent ? map.split(':') : map.slice(2, -1).split(':');
             let name = data[0];
-            let paramString = data[1];
+            let paramString = data.length > 2 ? data.slice(1).join(':') : data[1];
 
             let params = paramString
                 .split(',')

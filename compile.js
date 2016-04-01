@@ -185,9 +185,7 @@ function interpolate(str, data, outherComponentParams, path) {
 }
 
 function getComponentParams(component) {
-    const reg = /[\w\:,\=\-\#\[\]\s\.\"\']+/g;
-    const maps = uniq(component.match(reg) || []);
-    const t = getParamsFromString(maps, true);
+    const t = getParamsFromString([component], true);
     return t[Object.keys(t).pop()];
 }
 

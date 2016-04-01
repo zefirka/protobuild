@@ -5,6 +5,7 @@ const page = markup.page;
 const header = markup.header;
 const nav = markup.nav;
 const col = markup.col;
+const form = markup.form;
 
 module.exports =  page('index', 'Index', {
     description: 'Главная страница',
@@ -33,6 +34,11 @@ module.exports =  page('index', 'Index', {
             ]
         }
     },
+    'teh-list-items': [
+        {text: 'A'},
+        {text: 'B'},
+        {text: 'C'}
+    ],
     layout: {
         indexTable: {
             rows: [
@@ -47,40 +53,13 @@ module.exports =  page('index', 'Index', {
         page: {
             value: 'pages/main',
         }
-    }
+    },
+    feedbackForm: form('Feedback')
+        .text('Name', {
+            placeholder: 'Your name'
+        })
+        .text('Email', {
+            placeholder: 'Your email'
+        })
+        .value()
 });
-
-// form: {
-//     caption: 'General form',
-//     mainFields: [
-//         {
-//             label: 'The First',
-//             input: {
-//                 type: 'text',
-//                 value: 'Test'
-//             }
-//         },
-//         {
-//             label: 'The Second',
-//             input: {
-//                 type: 'checkbox',
-//                 value: 10
-//             }
-//         },
-//         {
-//             label: 'The select',
-//             select: {
-//                 options: [
-//                     {
-//                         text: 'the first',
-//                         value: 1
-//                     },
-//                     {
-//                         text: 'the second',
-//                         value: 2
-//                     }
-//                 ]
-//             }
-//         }
-//     ]
-// }

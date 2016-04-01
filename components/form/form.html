@@ -1,8 +1,10 @@
 <form action="${action}" class="b-form">
-	<caption class="b-form__caption">
+	<h2 class="b-form__caption">
 		${caption}
-	</caption>
+	</h2>
 	<fieldset class="b-form__fieldset">
 		${fields}
 	</fieldset>
+
+	${button: typeAttr="submit", tag="button", type="btn-danger", text="Submit"}
 </form>

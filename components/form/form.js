@@ -2,10 +2,12 @@
 
 const read = require('../../utils/fileSystem').read;
 
+const get = require('lodash').get;
+
 const select = require('../select/select');
 
 module.exports = function form(params, data, interpolate) {
-    const fields = data[params.fields] || [];
+    const fields = get(data, params.fields) || [];
 
     const fieldsMarkup = fields.map(field => {
         const type = field.input ? 'input' : 'select';
@@ -33,7 +35,7 @@ module.exports = function form(params, data, interpolate) {
     }).join('\n');
 
     return {
-        caption: params.caption || data.caption,
+        caption: get(data, params.caption) || params.caption,
         fields: fieldsMarkup
     };
 };

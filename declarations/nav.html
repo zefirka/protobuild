@@ -1,11 +1,11 @@
-<nav class="b-nav" data-module='menu'>
-	<div class="container">
-		<div class="row">
-			<div class="b-nav_xs-header hidden-sm hidden-md hidden-lg">
-				${breadcrumbs}
-				<i class="b-nav__dropdown glyphicon glyphicon-chevron-down"></i>
-			</div>
-			${list: items=nav.items}
-		</div>
+#{template:navigation}
+	<div class="b-nav_xs-header hidden-sm hidden-md hidden-lg">
+		${breadcrumbs}
+		<i class="b-nav__dropdown glyphicon glyphicon-chevron-down"></i>
 	</div>
+	${list: items=nav.items}
+#{/template}
+
+<nav class="b-nav" data-module='menu'>
+	${container: content=navigation}
 </nav>

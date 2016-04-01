@@ -1,16 +1,9 @@
 'use strict';
 
-const lodash = require('lodash');
-const omit = lodash.omit;
+const Component = require('../Component');
 
-const getMods = require('../../utils/bem').getMods;
-
-module.exports = function (params, data) {
-    const mods = omit(params, ['typeAttr', 'type']);
-    const css = getMods('b-popup-container', mods);
-
+module.exports = Component(function (params, data) {
     return {
         text: params.text || data.text,
-        mods: css
     };
-};
+});
