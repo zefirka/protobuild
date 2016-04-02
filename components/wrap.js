@@ -8,7 +8,14 @@ const compileComponent = require('../builder').compileComponent;
 module.exports = function (params, data, interpolate) {
     const body = data[params.name];
     let container = data[params.container];
+
     const innerParams = omit(params, ['name', 'container']);
+
+    const wrappedParams = Object.keys(innerParams).reduce((sum, paramName) => {
+        let innerParam = innerParams[paramName];
+        sum[paramName] = data[innerParam];
+        return sum;
+    }, {});
 
     if (!container) {
         container = compileComponent(params.container, data, params, interpolate);
@@ -16,7 +23,7 @@ module.exports = function (params, data, interpolate) {
 
     const result = interpolate(container, Object.assign({
         content: body
-    }, innerParams), undefined, __dirname);
+    }, innerParams, wrappedParams), undefined, './components');
 
-    return interpolate(result, data, undefined, __dirname);
+    return interpolate(result, data, undefined, './components');
 };

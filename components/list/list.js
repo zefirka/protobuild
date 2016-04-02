@@ -5,34 +5,25 @@ const get = lodash.get;
 
 const read = require('../../utils').read;
 
-const LINK_START = '<a href=${src} class="b-link">';
-const LINK_END = '</a>';
+const Component = require('../Component');
 
-module.exports = function (params, data, interpolate) {
+module.exports = Component(function (params, data, interpolate) {
     const template = params.template || 'simple';
     const items = get(data, params.items) || [];
     const itemsClassName = params.itemClassName || data.itemClassName;
 
     const templateHtml = read(`components/list/${template}.template.html`);
     const content = items.map(item => {
-        let link = item.src;
-
         item.css = itemsClassName;
-
-        if (link) {
-            item['link-start'] = interpolate(LINK_START, item);
-            item['link-end'] = LINK_END;
-        }
 
         if (item.active) {
             item.mods = 'b-list__item_acitve';
         }
 
-        return interpolate(templateHtml, Object.assign({}, data, item)) ;
+        return interpolate(templateHtml, item, undefined, './components/list') ;
     }).join('\n');
 
     return {
-        content: content,
-        className: params.className || data.className
+        listBody: content
     };
-};
+});

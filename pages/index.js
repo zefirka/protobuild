@@ -43,7 +43,7 @@ module.exports =  page('index', 'Index', {
         indexTable: {
             rows: [
                 [
-                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#FF87A5', height: 100}}),
+                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#9100FF', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#8FFFF4', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#6AFF92', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#EECE2E', height: 100}}),
@@ -60,6 +60,9 @@ module.exports =  page('index', 'Index', {
         })
         .text('Email', {
             placeholder: 'Your email'
+        })
+        .password('Password', {
+            placeholder: 'Your pass'
         })
         .value()
 });

@@ -11,19 +11,19 @@ const META = {
 };
 
 const NAV_PAGES = [
-	['О компании', 'about'],
-	['Услуги', 'services'],
-	['Цены', 'prices'],
-	['Галерея работ', 'gallery'],
-	['Контакты', 'contacts']
+    ['О компании', 'about'],
+    ['Услуги', 'services'],
+    ['Цены', 'prices'],
+    ['Галерея работ', 'gallery'],
+    ['Контакты', 'contacts']
 ];
 
 function col(xs, sm, md, lg) {
     let hidden = [
-    xs === null ? 'xs' : null,
-    sm === null ? 'sm' : null,
-    md === null ? 'md' : null,
-    lg === null ? 'lg' : null
+        xs === null ? 'xs' : null,
+        sm === null ? 'sm' : null,
+        md === null ? 'md' : null,
+        lg === null ? 'lg' : null
     ].filter(Boolean);
 
     if (arguments.length === 0) {
@@ -43,7 +43,7 @@ function col(xs, sm, md, lg) {
         sm = arguments[0];
         md = arguments[1];
         lg = arguments[1];
-    }else {
+    } else {
         xs = xs || 12;
         sm = sm || 12;
         md = md || 12;
@@ -90,7 +90,7 @@ function header() {
                 [
                     col(null, 2, 4, 4).data('<h1>${title}</h1>'),
                     col(null, 4, 4, 4).data({decl: 'logo'}),
-                    col(12,   6, 4, 4).data('${contacts}')
+                    col(12, 6, 4, 4).data('${contacts}')
                 ]
             ]
         }
@@ -101,6 +101,7 @@ function nav(active, listClassName, itemClassName) {
     return {
         className: listClassName || 'b-nav__list',
         itemClassName: itemClassName || 'b-nav__item',
+        template: 'links',
         items: NAV_PAGES.map(page => {
             return {
                 text: page[0],
@@ -135,7 +136,9 @@ function form(caption) {
                 label: label,
                 input: Object.assign({
                     type
-                }, options)
+                }, options, {
+                    css: options.css || 'form-control'
+                })
             });
             return api;
         };
