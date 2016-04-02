@@ -137,7 +137,7 @@ function form(caption) {
                 input: Object.assign({
                     type
                 }, options, {
-                    css: options.css || 'form-control'
+                    className: options.css || 'form-control'
                 })
             });
             return api;

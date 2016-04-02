@@ -13,7 +13,9 @@ module.exports = function (params, data, interpolate) {
 
     const wrappedParams = Object.keys(innerParams).reduce((sum, paramName) => {
         let innerParam = innerParams[paramName];
-        sum[paramName] = data[innerParam];
+        if (data[innerParam]) {
+            sum[paramName] = data[innerParam];
+        }
         return sum;
     }, {});
 

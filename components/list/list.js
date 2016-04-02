@@ -14,10 +14,10 @@ module.exports = Component(function (params, data, interpolate) {
 
     const templateHtml = read(`components/list/${template}.template.html`);
     const content = items.map(item => {
-        item.css = itemsClassName;
+        item.className = itemsClassName;
 
         if (item.active) {
-            item.mods = 'b-list__item_acitve';
+            item.className += ' b-list__item_acitve';
         }
 
         return interpolate(templateHtml, item, undefined, './components/list') ;
