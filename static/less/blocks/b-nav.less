@@ -1,4 +1,5 @@
 @import '../mixins.less';
+@import '../variables.less';
 
 .is-sticky {
 	.b-nav,
@@ -14,7 +15,7 @@
 
 .b-nav{
 	margin-bottom: 10px;
-	background: #2B76B2;
+	background: @dark;
 
 	&_xs-header {
 		text-align: center;
@@ -24,7 +25,7 @@
 	}
 
 	&__list {
-		background: #2B76B2;
+		background: @dark;
 		display: table;
 		width: 100%;
 	}
@@ -47,18 +48,31 @@
 
 	&__item {
 		display: table-cell;
-		padding: 8px 10px;
+		padding: 14px 10px;
 		text-align: center;
 		color: white;
 
-		&:hover{
-			background: ;
-			background:  #5D91BB;;
+		.b-link {
+			&:hover {
+				text-decoration: none;
+							border-botttom: solid 2px @primary;	
+			}
+			transition: border 0.3s 0.05s;
+			padding: 5px 8px;
+			border: solid 2px @dark;
+		}
+
+		&:hover .b-link{
+			border: solid 2px @primary;
+			border-top-color: @dark;
+			border-left-color: @dark;
+			border-right-color: @dark;
 		}
 	}
 
-	.b-list__item_acitve{
-		background: #4CC1ED
+	.b-list__item_acitve .b-link{
+		border: solid 2px @primary;
+		// background: #4CC1ED
 	}
 
 	.b-link {
