@@ -47,6 +47,7 @@ readDir('../pages', true).then(pages => {
         try {
             page = interpolate(entry, data, undefined, src);
         } catch (error) {
+            console.trace();
             throw new Error(error);
         }
 

@@ -10,7 +10,8 @@ const memoize = lodash.memoize;
 module.exports = {
     read: memoize(read),
     readDir: memoize(readDir),
-    getStat: memoize(getStat)
+    getStat: memoize(getStat),
+    exists
 };
 
 /**
@@ -69,4 +70,13 @@ function getStat(dir, async) {
     return async ?
         _promisify(fs.stat, dir) :
         fs.statSync(adr);
+}
+
+function exists(path) {
+    try {
+        fs.accessSync(join(__dirname, '../', path), fs.F_OK);
+        return true;
+    } catch (e) {
+        return false;
+    }
 }

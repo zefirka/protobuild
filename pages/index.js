@@ -47,6 +47,12 @@ module.exports =  page('index', 'Index', {
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#8FFFF4', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#6AFF92', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#EECE2E', height: 100}}),
+                ],
+                [
+                    col(3, 12, 3, 4).data({component: 'block', params: {bg: '#FF000B', height: 120}}),
+                    col(3, 12, 3, 4).data({component: 'block', params: {bg: '#000FFF', height: 120}}),
+                    col(3, 6, 3, 4).data({component: 'block', params: {bg: '#05C900', height: 120}}),
+                    col(3, 6, 3, 12).data({component: 'block', params: {bg: '#EEF208', height: 120}}),
                 ]
             ]
         },
@@ -63,6 +69,12 @@ module.exports =  page('index', 'Index', {
         })
         .password('Password', {
             placeholder: 'Your pass'
+        })
+        .select('Test', ['тебе', 'хабиб', 'прислал', 'бакшиш'], {
+            className: 'form-select'
+        })
+        .submit('Test', {
+            className: 'btn-success'
         })
         .value()
 });

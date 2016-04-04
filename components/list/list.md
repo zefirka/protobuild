@@ -1,6 +1,4 @@
-# List v0.1.1
-
----
+# List v0.2.0
 
 List component. 
 
@@ -9,7 +7,18 @@ List component.
  - `className` - classes of list or path to classes in page JSON
  - `itemClassName` - classnames for items
  - `items` - path to items array in page JSON
- - `template` - default: `simple` - template to render items. **@TODO** - make posible to use custom templates
+ - `activeClassName` - default: `b-list__item_acitve` - class name for active items
+ - `template` - default: `simple` - template to render items or given markup
+
+#### Items array example
+```js
+const list = [
+    {text: 'List item 1', active: true},
+    {text: 'List item 2', active: false}
+];
+```
+
+If item's property active is true, then item gain class name `params.activeClassName`
 
 ### Simple template options 
 ```html

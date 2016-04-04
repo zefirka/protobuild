@@ -6,17 +6,19 @@ const get = require('lodash').get;
 
 const select = require('../select/select');
 
+const compileComponent = require('../../builder').compileComponent;
+
 module.exports = function form(params, data, interpolate) {
     const fields = get(data, params.fields) || [];
+    console.log('fields', fields);
 
     const fieldsMarkup = fields.map(field => {
-        const type = field.input ? 'input' : 'select';
+        const type =  field.type || (field.input ? 'input' : 'select');
         const inputType = field.input ? field.input.type : true;
 
         if (type === 'input' && (!inputType || inputType === 'text')) {
             field.input.css = 'form-control';
-        }
-
+        }else
         if (type === 'select') {
             field.select.css = 'form-control';
             field.select.options = select({
@@ -24,6 +26,15 @@ module.exports = function form(params, data, interpolate) {
             }, {
                 options: field.select.options
             }, interpolate).options;
+        }else
+        if (type === 'submit') {
+            console.log('field', field);
+            return compileComponent('button', {}, {
+                tag: 'button',
+                submit: true,
+                text: field.text,
+                className: field.className
+            }, interpolate);
         }
 
         const fieldMarkup =  interpolate(read(`./components/${type}/${type}.html`), field[type]);
@@ -36,6 +47,7 @@ module.exports = function form(params, data, interpolate) {
 
     return {
         caption: get(data, params.caption) || params.caption,
-        fields: fieldsMarkup
+        fields: fieldsMarkup,
+        // buttons: buttons
     };
 };

@@ -112,23 +112,49 @@ function nav(active, listClassName, itemClassName) {
     };
 }
 
+/**
+ * @public
+ * @param {string} caption
+ * @return {object}
+ */
 function form(caption) {
     let struct = {
         caption,
         fields: []
     };
 
-    let api = {
+    const api = {
         text: createInputType('text'),
         email: createInputType('email'),
         number: createInputType('number'),
         password: createInputType('password'),
         checkbox: createInputType('checkbox'),
         radio: createInputType('radio'),
+        select: (label, options, selectOptions) => {
+            struct.fields.push({
+                label,
+                select: Object.assign({
+                    options: prepareSelectOptions(options)
+                }, selectOptions)
+            });
+            return api;
+        },
+        submit: (text, options) => {
+            struct.fields.push(Object.assign({
+                type: 'submit',
+                text: text
+            }, options));
+            return api;
+        },
         value: () => struct,
         valueOf: () => struct
     };
 
+    /**
+     * @private
+     * @param {stirng} type
+     * @return {function}
+     */
     function createInputType(type) {
         return (label, options) => {
             options.checked = options.checked === true ? 'checked' : '';
@@ -154,3 +180,18 @@ module.exports = {
     page,
     form
 };
+
+/**
+ * @private
+ * @param {array|object} opts
+ * @return {array}
+ */
+function prepareSelectOptions(opts) {
+    return Array.isArray(opts) ?
+        opts.map(opt => {
+            return typeof opt === 'string' ? {text: opt, value: opt} : opt;
+        }) :
+        Object.keys(opts).map(text => {
+            return {text: text, value: opts[text]};
+        });
+}
