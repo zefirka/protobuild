@@ -6,12 +6,12 @@ const get = require('lodash').get;
 
 const select = require('../select/select');
 
+const Component = require('../Component');
+
 const compileComponent = require('../../builder').compileComponent;
 
-module.exports = function form(params, data, interpolate) {
+module.exports = Component(function (params, data, interpolate) {
     const fields = get(data, params.fields) || [];
-    console.log('fields', fields);
-
     const fieldsMarkup = fields.map(field => {
         const type =  field.type || (field.input ? 'input' : 'select');
         const inputType = field.input ? field.input.type : true;
@@ -28,7 +28,6 @@ module.exports = function form(params, data, interpolate) {
             }, interpolate).options;
         }else
         if (type === 'submit') {
-            console.log('field', field);
             return compileComponent('button', {}, {
                 tag: 'button',
                 submit: true,
@@ -47,7 +46,6 @@ module.exports = function form(params, data, interpolate) {
 
     return {
         caption: get(data, params.caption) || params.caption,
-        fields: fieldsMarkup,
-        // buttons: buttons
+        fields: fieldsMarkup
     };
-};
+});
