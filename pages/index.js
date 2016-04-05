@@ -6,6 +6,7 @@ const header = markup.header;
 const nav = markup.nav;
 const col = markup.col;
 const form = markup.form;
+const flip = markup.flip;
 
 module.exports =  page('index', 'Index', {
     description: 'Главная страница',
@@ -43,7 +44,10 @@ module.exports =  page('index', 'Index', {
         indexTable: {
             rows: [
                 [
-                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#9100FF', height: 100}}),
+                    col(12, 6, 3, 3).data(flip('Test', 'http://placehold.it/800x100', [
+                        {text: 'allah', src: 'http://yandex.ru'},
+                        {text: 'babah', src: 'http://yandex.ru'}
+                    ])),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#8FFFF4', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#6AFF92', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#EECE2E', height: 100}}),
@@ -57,7 +61,7 @@ module.exports =  page('index', 'Index', {
             ]
         },
         page: {
-            value: 'pages/main',
+            value: 'pages/main'
         }
     },
     feedbackForm: form('Feedback')

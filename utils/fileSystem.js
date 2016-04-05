@@ -72,6 +72,11 @@ function getStat(dir, async) {
         fs.statSync(adr);
 }
 
+/**
+ * @public
+ * @param {string} path
+ * @return {boolean}
+ */
 function exists(path) {
     try {
         fs.accessSync(join(__dirname, '../', path), fs.F_OK);

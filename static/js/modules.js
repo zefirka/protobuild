@@ -13,7 +13,8 @@ var modules = {
     menu: require('./modules/menu'),
     popup: require('./modules/popup'),
     trigger: require('./modules/trigger'),
-    viewport: require('./modules/viewport')
+    viewport: require('./modules/viewport'),
+    fliplist: require('./modules/fliplist')
 };
 
 /**

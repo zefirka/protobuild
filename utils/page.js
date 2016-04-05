@@ -18,6 +18,23 @@ const NAV_PAGES = [
     ['Контакты', 'contacts']
 ];
 
+module.exports = {
+    col,
+    nav,
+    header,
+    page,
+    form,
+    flip
+};
+
+/**
+ * @public
+ * @param {number|null} [xs]
+ * @param {number|null} [sm]
+ * @param {number|null} [md]
+ * @param {number|null} [lg]
+ * @return {object}
+ */
 function col(xs, sm, md, lg) {
     let hidden = [
         xs === null ? 'xs' : null,
@@ -66,6 +83,13 @@ function col(xs, sm, md, lg) {
     };
 }
 
+/**
+ * @public
+ * @param {string} name
+ * @param {string} title
+ * @param {object} data
+ * @return {object}
+ */
 function page(name, title, data) {
     data = Object.assign({
         title: title
@@ -78,6 +102,10 @@ function page(name, title, data) {
     }, META);
 }
 
+/**
+ * @public
+ * @return {object}
+ */
 function header() {
     return {
         contacts: {
@@ -88,15 +116,22 @@ function header() {
         table: {
             rows: [
                 [
-                    col(null, 2, 4, 4).data('<h1>${title}</h1>'),
+                    col(null, 2, 3, 3).data('<h1>${title}</h1>'),
                     col(null, 4, 4, 4).data({decl: 'logo'}),
-                    col(12, 6, 4, 4).data('${contacts}')
+                    col(12,   6, 5, 5).data('${contacts}')
                 ]
             ]
         }
     };
 }
 
+/**
+ * @public
+ * @param {string} active
+ * @param {string} listClassName
+ * @param {string} itemClassName
+ * @return {object}
+ */
 function nav(active, listClassName, itemClassName) {
     return {
         className: listClassName || 'b-nav__list',
@@ -173,13 +208,12 @@ function form(caption) {
     return api;
 }
 
-module.exports = {
-    col,
-    nav,
-    header,
-    page,
-    form
-};
+function flip(title, image, items) {
+    return {
+        component: 'fliplist',
+        params: {title, image, items}
+    };
+}
 
 /**
  * @private

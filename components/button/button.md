@@ -1,7 +1,5 @@
 # Button v0.1.0
 
----
-
 Simple button
 
 ### Options

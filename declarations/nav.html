@@ -1,9 +1,19 @@
+#{template:navLinks}
+	<li class="b-list__item ${className}">
+		<a href="${src}" class="b-link">
+			<span class="b-link__wrapper">
+				${text}
+			</span>
+		</a>
+	</li>
+#{/template}
+
 #{template:navigation}
 	<div class="b-nav_xs-header hidden-sm hidden-md hidden-lg">
 		${breadcrumbs}
 		<i class="b-nav__dropdown glyphicon glyphicon-chevron-down"></i>
 	</div>
-	${list: items=nav.items, template=links}
+	${list: items=nav.items, template=navLinks}
 #{/template}
 
 <nav class="b-nav" data-module='menu'>

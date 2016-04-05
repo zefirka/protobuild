@@ -1,0 +1,9 @@
+<div class="b-fliplist ${className}" data-module="fliplist" data-params="position: ${position || left}">
+	<img src="${image}" class="b-fliplist__background">
+	<div class="b-fliplist__title">
+		${title}
+	</div>
+	<div class="b-fliplist-items b-fliplist__list b-fliplist-items_hidden_yes b-fliplist-items_position_${position || left}">
+		${list: items=items, itemClassName=b-fliplist__list-item, template=links}
+	</div>
+</div>

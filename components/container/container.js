@@ -71,7 +71,6 @@ module.exports = function  (params, data, interpolate) {
     }).join('\n');
 
     return {
-        content,
-        css: params.css
+        content
     };
 };

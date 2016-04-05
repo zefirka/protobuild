@@ -40,3 +40,68 @@ html, body {
 	background: #FFD68A;
 	font-weight: bold;
 }
+
+
+.b-fliplist {
+	overflow: hidden;;
+	position: relative;
+	height: 100px;
+	margin-bottom: 10px;
+
+	&_distant  {
+		.b-fliplist__background {
+			opacity: 0.3;
+		}
+	}
+
+	&__title {
+		position: relative;
+		color: white;
+		opacity: 0.6;
+		font-size: 38px;
+		padding: 10px 15px;
+	}
+
+	&__background {
+		transition: opacity 0.5s 0.1s ease-in;
+		position: absolute;
+		z-index: 0;
+		top: 0;
+		left: 0;
+	}
+
+	.b-fliplist-items {
+		position: absolute;
+		padding: 8px 10px;
+		z-index: 1;
+		width: 50%;
+		top: 0;
+		right: 0;
+		transition: right 0.3s;
+		transition: left 0.3s;
+
+		&_position_left {
+			left: 0;
+		}
+
+		&_position_left.b-fliplist-items_hidden_yes {
+			left: -50%;
+		}
+
+		&_position_right {
+			right: 0;
+		}
+
+		&_position_right.b-fliplist-items_hidden_yes {
+			right: -50%;
+		}
+	}
+}
+
+.b-button {
+	padding: 8px 12px;
+	background: @dark;
+	color: white;
+	border-radius: 3px;
+	cursor: pointer;
+}
