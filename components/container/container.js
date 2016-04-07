@@ -13,7 +13,7 @@ const read = require('../../utils/fileSystem').read;
 
 const compileComponent = require('../../builder').compileComponent;
 
-module.exports = function  (params, data, interpolate) {
+module.exports = function (params, data, interpolate) {
     let containerData = get(data, params.data) || [];
 
     if (!containerData.length && params.content) {

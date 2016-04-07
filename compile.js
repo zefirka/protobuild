@@ -29,7 +29,14 @@ const protobuilder = require('./builder');
 const compileComponent = protobuilder.compileComponent;
 const importer = protobuilder.importer;
 
+const argvPages = process.argv.slice(2);
+
 readDir('../pages', true).then(pages => {
+
+    if (argvPages.length) {
+        pages = pages.filter(page => contains(argvPages, page.split('.')[0]));
+    }
+
     pages.forEach(pageName => {
         let page = null;
         let pageData = require(`./pages/${pageName}`);
@@ -99,7 +106,7 @@ function interpolate(str, data, outherComponentParams, path) {
     data = Object.assign({}, data || {}, stringTemplates);
 
     let parsed = str;
-    let maps = uniq(str.match(searchRegEx) || []);
+    let maps = str.match(searchRegEx) || [];
     let templateParams = getParams(str);
 
     let aliases = maps.reduce((sum, map) => {
