@@ -44,11 +44,8 @@ module.exports =  page('index', 'Index', {
         indexTable: {
             rows: [
                 [
-                    col(12, 6, 3, 3).data(flip('Test', 'http://placehold.it/800x100', [
-                        {text: 'allah', src: 'http://yandex.ru'},
-                        {text: 'babah', src: 'http://yandex.ru'}
-                    ])),
-                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#8FFFF4', height: 100}}),
+                    col(12, 6, 3, 3).data(flipr('Test')),
+                    col(12, 6, 3, 3).data(flipr('Allah', 'right')),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#6AFF92', height: 100}}),
                     col(12, 6, 3, 3).data({component: 'block', params: {bg: '#EECE2E', height: 100}}),
                 ],
@@ -82,3 +79,10 @@ module.exports =  page('index', 'Index', {
         })
         .value()
 });
+
+function flipr(name, position) {
+    return flip(name, 'http://placehold.it/800x100', position || 'left', [
+        {text: 'allah', src: 'http://yandex.ru'},
+        {text: 'babah', src: 'http://yandex.ru'}
+    ]);
+}

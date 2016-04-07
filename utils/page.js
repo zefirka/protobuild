@@ -208,10 +208,10 @@ function form(caption) {
     return api;
 }
 
-function flip(title, image, items) {
+function flip(title, image, position, items) {
     return {
         component: 'fliplist',
-        params: {title, image, items}
+        params: {title, image, items, position}
     };
 }
 

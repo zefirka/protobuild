@@ -1,27 +1,60 @@
 @import './variables.less';
 
+* {
+	font-family: Arial, Helvetica, Verdana, Trebuchet MS, sans-serif;
+}
+
 h1 {
 	font-size: @h1size;
 	margin: @h1margin;
+	font-weight: bold;
 }
 
 h2 {
 	font-size: @h2size;
 	margin: @h2margin;
+	font-weight: bold;
 }
 
 h3 {
 	font-size: @h3size;
+	margin: @hmagin;
+	font-weight: bold;
 }
 
 h4 {
 	font-size: @h4size;
+	margin: @hmagin;
+	font-weight: bold;
 }
 
 h5 {
 	font-size: @h5size;
+	margin: @hmagin;
 }
 
 h6 {
 	font-size: @h6size;
+	margin: @hmagin;
+}
+
+
+.b-img {
+	margin-bottom: 10px;
+
+	&_left {
+		float: left;
+		margin-right: 15px;
+	}
+
+	&_right {
+		float: right;
+		margin-left: 15px;
+	}
+}
+
+article {
+	p {
+		text-align: justify;
+	}
 }

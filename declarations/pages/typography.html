@@ -1,0 +1,109 @@
+#{template:typography}
+	<h1>This Header is H1</h1>
+	<h2>But this header is H2</h2>
+	<h3>And this is h3</h3>
+	<h4>H4 Header is pretty small</h4>
+	<h5>H5 is smaller</h5>
+	<h6>ZOMG teh smallest header h6</h6>
+
+	<h3>Paragraph</h3>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<p>Давным-давно, когда на Земле господствовали Титаны, одним из самых могущественных кланов считался Северный. Клан обладал множеством грозных магических предметов, а самым страшным из них был браслет Владыка. Этот древний браслет, доставшийся Титанам еще от Прародителей, давал его обладателю полный контроль над сознанием смертных. Титаны давали таким предметам собственные имена, так как каждый из них обладал собственной индивидуальностью и мог формировать сознание своего хозяина. Таким образом, если владелец предмета не был человеком сильной воли, он мог превратиться из хозяина предмета в его раба.</p>
+	<hr>
+	<h2>Unordered list</h2>
+	<ul>
+		<li>Ctulhu</li>
+		<li>Yog-sototh</li>
+		<li>Mi-Go</li>
+		<li>Shoggot</li>
+	</ul>
+	<h2>Ordered list</h2>
+	<ol>
+		<li>Ctulhu</li>
+		<li>Yog-sototh</li>
+		<li>Mi-Go</li>
+		<li>Shoggot</li>
+	</ol>
+	<hr>
+	<h2>Included list</h2>
+	<ul>
+		<li>Ctulhu</li>
+		<li>Yog-sototh</li>
+		<li>
+			<ul>
+				<li>Ya! Shub-niggurat</li>
+				<li>Nyarlathotep</li>
+				<li>Zatoggua</li>
+			</ul>
+		</li>
+		<li>Shoggot</li>
+	</ul>
+	<h2>Colors</h2>
+	
+	<table class="b-color-table">
+		<tr>
+			<td>Primary</td>
+			<td>
+				${block: bg=00b6f1, width=40, height=40, className=no-margin}	
+			</td>
+			<td>Secondary</td>
+			<td>
+				${block: bg=448EF1, width=40, height=40, className=no-margin}
+			</td>
+		</tr>
+		<tr>
+			<td>Primary dark</td>
+			<td>
+				${block: bg=333, width=40, height=40, className=no-margin}
+			</td>
+			<td>Secondary dark</td>
+			<td>
+				${block: bg=666, width=40, height=40, className=no-margin}
+			</td>
+		</tr>
+	</table>
+
+	<hr>
+	<h2>Articles</h2>
+	<article>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	</article>
+
+	<h2>Included images</h2>
+	<h3>Right</h3>
+	<article>
+		<img src="http://placehold.it/120x120" class="b-img_right">
+		<p>Давным-давно, когда на Земле господствовали Титаны, одним из самых могущественных кланов считался Северный. Клан обладал множеством грозных магических предметов, а самым страшным из них был браслет Владыка. Этот древний браслет, доставшийся Титанам еще от Прародителей, давал его обладателю полный контроль над сознанием смертных. Титаны давали таким предметам собственные имена, так как каждый из них обладал собственной индивидуальностью и мог формировать сознание своего хозяина. Таким образом, если владелец предмета не был человеком сильной воли, он мог превратиться из хозяина предмета в его раба.</p>
+	</article>
+
+	<h3>Left</h3>
+	<article>
+		<img src="http://placehold.it/120x120" class="b-img_left">
+		<p>Давным-давно, когда на Земле господствовали Титаны, одним из самых могущественных кланов считался Северный. Клан обладал множеством грозных магических предметов, а самым страшным из них был браслет Владыка. Этот древний браслет, доставшийся Титанам еще от Прародителей, давал его обладателю полный контроль над сознанием смертных. Титаны давали таким предметам собственные имена, так как каждый из них обладал собственной индивидуальностью и мог формировать сознание своего хозяина. Таким образом, если владелец предмета не был человеком сильной воли, он мог превратиться из хозяина предмета в его раба.</p>
+	</article>
+
+
+	<article>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat.</p>
+		<blockquote>
+			Allahu akbar! Mussalah imhala salam usmallyah.
+		</blockquote>
+	</article>
+
+
+#{/template}
+
+${container: content=typography}

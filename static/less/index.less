@@ -72,13 +72,14 @@ html, body {
 
 	.b-fliplist-items {
 		position: absolute;
+		background: #F1412C;
 		padding: 8px 10px;
 		z-index: 1;
 		width: 50%;
+		height: 100%;
 		top: 0;
 		right: 0;
-		transition: right 0.3s;
-		transition: left 0.3s;
+		transition: all 0.3s;
 
 		&_position_left {
 			left: 0;
@@ -104,4 +105,14 @@ html, body {
 	color: white;
 	border-radius: 3px;
 	cursor: pointer;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
+.b-color-table {
+	td {
+		padding: 10px 15px;
+	}
 }
