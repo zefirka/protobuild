@@ -53,8 +53,11 @@ function Component(fn, toOmit) {
             if (Array.isArray(className)) {
                 params.className = className.join(' ');
             } else {
-                /** TODO **/
-                params.className = 'TODO_CLASSNAME';
+                params.className = Object.keys(className).reduce((cn, block) => {
+                    let mode = className[block];
+                    cn += `${block}_${mode} `;
+                    return cn;
+                }, '');
             }
         }
 
