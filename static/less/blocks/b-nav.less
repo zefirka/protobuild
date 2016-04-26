@@ -11,11 +11,16 @@
 
 .sticky-wrapper {
 	margin-bottom: 10px;
+
+	&.is-sticky .b-nav{
+		.box-shadow(-2px 4px 9px rgba(0,0,0,0.4));
+	}
 }
 
 .b-nav{
 	margin-bottom: 10px;
 	background: @dark;
+	transition: box-shadow 0.3s;
 
 	&_xs-header {
 		text-align: center;
@@ -51,6 +56,10 @@
 		padding: 14px 10px;
 		text-align: center;
 		color: white;
+
+		&:before {
+			display: none;
+		}
 
 		.b-link {
 			&:hover {

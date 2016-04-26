@@ -1,0 +1,151 @@
+@import '../variables.less';
+
+.b-fliplist {
+	overflow: hidden;;
+	position: relative;
+	height: 100px;
+	margin-bottom: 10px;
+
+	&_distant  {
+		.b-fliplist__background {
+			opacity: 0.3;
+		}
+	}
+
+	&__title {
+		position: relative;
+		color: white;
+		opacity: 0.6;
+		font-size: 38px;
+		padding: 10px 15px;
+	}
+
+	&__background {
+		transition: opacity 0.5s 0.1s ease-in;
+		position: absolute;
+		z-index: 0;
+		top: 0;
+		left: 0;
+	}
+
+	&__list-item {
+		width: 100%;
+		position: relative;
+		
+		.b-link{
+			display: block;
+			position: relative;
+			width: 100%;
+			z-index: 2;
+		}
+
+		&:hover {
+			&:before {
+				content: "";
+				display: block;
+				background: @primary;
+				position: absolute;
+				z-index: 0;
+				width: 140%;
+				height: 100%;
+				left: -20%;
+				top: 0;
+			}
+
+			.b-link {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.b-fliplist-items {
+		position: absolute;
+		background: rgba(0, 0, 0, 0.4);
+		padding: 8px 10px;
+		z-index: 1;
+		width: 50%;
+		top: 0;
+		right: 0;
+		transition: all 0.5s;
+		color: white;
+		padding: 5px 15px 10px 10px;
+		margin: 5px 10px;
+
+		.b-link {
+			color: white;
+		}
+
+
+		&__title {
+			font-size: 16px;
+		}
+
+		&_position_left {
+			left: 0;
+		}
+
+		&_position_left.b-fliplist-items_hidden_yes {
+			left: -100%;
+		}
+
+		&_position_right {
+			right: 0;
+		}
+
+		&_position_right.b-fliplist-items_hidden_yes {
+			right: -100%;
+		}
+	}
+}
+
+.sm.g-mobile .b-fliplist,
+.xs .b-fliplist {
+	height: inherit;
+	text-align: right;
+
+	&_distant  {
+		.b-fliplist__background {
+			opacity: 1;
+		}
+	}
+
+	* {
+		text-align: left;
+	}
+
+	&__title {
+		padding: 0;
+	}
+
+	&__list-item:hover:before { 
+		display: none;
+	}
+
+	&-items {
+		margin: 0;
+		position: relative;
+		display: inline-block;
+		transition: none;
+		top: 0;
+		right: 0;
+		background: @dark;
+
+		&__title {
+			font-size: 18px;
+			margin-bottom: 10px;
+		}
+
+		&_position_left.b-fliplist-items_hidden_yes,
+		&_position_right.b-fliplist-items_hidden_yes {
+			left: 0;
+			right: 0;
+		}
+
+		.b-link {
+			padding: 10px 5px;
+			border: dashed @primary 1px;
+			margin-bottom: 10px;
+			color: white;
+		}
+	}
+}

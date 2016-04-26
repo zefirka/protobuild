@@ -4,6 +4,9 @@
 		${title}
 	</div>
 	<div class="b-fliplist-items b-fliplist__list b-fliplist-items_hidden_yes b-fliplist-items_position_${position || left}">
+		<div class="b-fliplist-items__title">
+			${fliplistTitle}
+		</div>
 		${list: items=items, itemClassName=b-fliplist__list-item, template=links}
 	</div>
 </div>

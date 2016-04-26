@@ -11,7 +11,8 @@ const Component = require('../Component');
 const compileComponent = require('../../builder').compileComponent;
 
 module.exports = Component(function (params, data, interpolate) {
-    const fields = get(data, params.fields) || [];
+    const fields = Array.isArray(params.fields) ? params.fields : (get(data, params.fields) || []);
+
     const fieldsMarkup = fields.map(field => {
         const type =  field.type || (field.input ? 'input' : 'select');
         const inputType = field.input ? field.input.type : true;

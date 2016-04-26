@@ -14,7 +14,8 @@ var modules = {
     popup: require('./modules/popup'),
     trigger: require('./modules/trigger'),
     viewport: require('./modules/viewport'),
-    fliplist: require('./modules/fliplist')
+    fliplist: require('./modules/fliplist'),
+    mobilematch: require('./modules/ua')
 };
 
 /**

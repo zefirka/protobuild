@@ -13,7 +13,7 @@
 	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	<p>Давным-давно, когда на Земле господствовали Титаны, одним из самых могущественных кланов считался Северный. Клан обладал множеством грозных магических предметов, а самым страшным из них был браслет Владыка. Этот древний браслет, доставшийся Титанам еще от Прародителей, давал его обладателю полный контроль над сознанием смертных. Титаны давали таким предметам собственные имена, так как каждый из них обладал собственной индивидуальностью и мог формировать сознание своего хозяина. Таким образом, если владелец предмета не был человеком сильной воли, он мог превратиться из хозяина предмета в его раба.</p>
+	<p>Давным-давно, когда на Земле господствовали Титаны, одним из самых могущественных кланов считался Северный. Клан обладал множеством грозных магических предметов, а самым страшным из них был браслет <a href="test" class="b-link">Владыка</a>. Этот древний браслет, доставшийся <a href="test">Титанам</a> еще от Прародителей, давал его обладателю полный контроль над сознанием смертных. Титаны давали таким предметам собственные имена, так как каждый из них обладал собственной индивидуальностью и мог формировать сознание своего хозяина. Таким образом, если владелец предмета не был человеком сильной воли, он мог превратиться из хозяина предмета в его раба.</p>
 	<hr>
 	<h2>Unordered list</h2>
 	<ul>
@@ -34,13 +34,13 @@
 	<ul>
 		<li>Ctulhu</li>
 		<li>Yog-sototh</li>
-		<li>
+		
 			<ul>
 				<li>Ya! Shub-niggurat</li>
 				<li>Nyarlathotep</li>
 				<li>Zatoggua</li>
 			</ul>
-		</li>
+		
 		<li>Shoggot</li>
 	</ul>
 	<h2>Colors</h2>
@@ -53,7 +53,7 @@
 			</td>
 			<td>Secondary</td>
 			<td>
-				${block: bg=00b6f1, width=40, height=40, className=no-margin}
+				${block: bg=027CA4, width=40, height=40, className=no-margin}
 			</td>
 		</tr>
 		<tr>
@@ -63,7 +63,7 @@
 			</td>
 			<td>Secondary dark</td>
 			<td>
-				${block: bg=333, width=40, height=40, className=no-margin}
+				${block: bg=000001, width=40, height=40, className=no-margin}
 			</td>
 		</tr>
 	</table>
@@ -106,4 +106,30 @@
 
 #{/template}
 
+#{template:buttons}
+	<h1>Buttons</h1>
+	<div class="b-button-container">
+		<span class="b-button">
+			Button Simple	
+		</span>
+	</div>
+	<div class="b-button-container">
+		<span class="b-button b-button_primary">
+			Button Primary
+		</span>
+	</div>
+	<div class="b-button-container">
+		<span class="b-button b-button_success">
+			Button Success	
+		</span>
+	</div>
+	<div class="b-button-container">
+		<span class="b-button b-button_danger">
+			Button Danger
+		</span>
+	</div>
+#{/template}
+
+
 ${container: content=typography}
+${container: content=buttons}

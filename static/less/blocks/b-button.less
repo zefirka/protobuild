@@ -1,0 +1,39 @@
+@import '../variables.less';
+
+.b-button {
+	display: inline-block;
+	padding: 8px 12px;
+	background: @dark;
+	border: solid @secondary-dark 1px;
+	color: white;
+	border-radius: 3px;
+	cursor: pointer;
+
+	&:hover {
+		background: @secondary-dark;
+	}
+
+	&_primary {
+		background: @primary;
+		border: solid darken(@primary, 10%) 1px;
+		&:hover {
+			background: darken(@primary, 10%);
+		}
+	}
+
+	&_danger {
+		background: #D5103E;
+		border: solid darken(#D5103E, 10%) 1px;
+		&:hover {
+			background: darken(#D5103E, 10%);
+		}
+	}
+
+	&_success {
+		background: #25AE94;
+		border: solid darken(#25AE94, 10%) 1px;
+		&:hover {
+			background: darken(#25AE94, 10%);
+		}
+	}
+}

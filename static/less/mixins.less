@@ -4,8 +4,15 @@
 }
 
 .transition(@property, @time, @function) {
-    // -webkit-transition: @property @time @function;
-    // -moz-transition: @property @time @function;
-    // -o-transition: @property @time @function;
+    -webkit-transition: @property @time @function;
+    -moz-transition: @property @time @function;
+    -o-transition: @property @time @function;
     transition: @property @time @function;
+}
+
+.box-shadow (@string) {
+	-ms-box-shadow: @string;
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
 }

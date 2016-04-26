@@ -44,16 +44,9 @@ module.exports =  page('index', 'Index', {
         indexTable: {
             rows: [
                 [
-                    col(12, 6, 3, 3).data(flipr('Test')),
-                    col(12, 6, 3, 3).data(flipr('Allah', 'right')),
-                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#6AFF92', height: 100}}),
-                    col(12, 6, 3, 3).data({component: 'block', params: {bg: '#EECE2E', height: 100}}),
-                ],
-                [
-                    col(3, 12, 3, 4).data({component: 'block', params: {bg: '#FF000B', height: 120}}),
-                    col(3, 12, 3, 4).data({component: 'block', params: {bg: '#000FFF', height: 120}}),
-                    col(3, 6, 3, 4).data({component: 'block', params: {bg: '#05C900', height: 120}}),
-                    col(3, 6, 3, 12).data({component: 'block', params: {bg: '#EEF208', height: 120}}),
+                    col(12, 6, 4, 4).data(flipr('', 'Заборы')),
+                    col(12, 6, 4, 4).data(flipr('', 'Allah', 'right')),
+                    col(12, 12, 4, 4).data(flipr('', 'Testuinno', 'right')),
                 ]
             ]
         },
@@ -63,7 +56,8 @@ module.exports =  page('index', 'Index', {
     },
     feedbackForm: form('Feedback')
         .text('Name', {
-            placeholder: 'Your name'
+            placeholder: 'Your name',
+            value: 'ALLAH !!!'
         })
         .text('Email', {
             placeholder: 'Your email'
@@ -71,17 +65,20 @@ module.exports =  page('index', 'Index', {
         .password('Password', {
             placeholder: 'Your pass'
         })
-        .select('Test', ['тебе', 'хабиб', 'прислал', 'бакшиш'], {
+        .select('Test', 'тебе хабиб прислал бакшиш'.split(' '), {
             className: 'form-select'
         })
         .submit('Test', {
             className: 'btn-success'
         })
+        .submit('allah', {
+            className: 'btn-success'
+        })
         .value()
 });
 
-function flipr(name, position) {
-    return flip(name, 'http://placehold.it/800x100', position || 'left', [
+function flipr(name, title, position) {
+    return flip(name, title, 'http://placehold.it/800x200', position || 'left', [
         {text: 'allah', src: 'http://yandex.ru'},
         {text: 'babah', src: 'http://yandex.ru'}
     ]);
