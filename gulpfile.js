@@ -9,6 +9,7 @@ const join = require('path').join;
 const shell = require('gulp-shell');
 const task = require('./utils/gulp-task')(gulp);
 const autoprefixer = require('gulp-autoprefixer');
+const uncss = require('gulp-uncss');
 
 task('styles', () => {
     return gulp.src('./static/less/index.less')
@@ -39,10 +40,13 @@ task('scripts', () => {
         .pipe(gulp.dest('./bundles/js'));
 });
 
+//https://www.npmjs.com/package/gulp-uncss
+
 task('watch', () => {
     gulp.watch('./pages/*', ['compile']);
     gulp.watch('./components/**/*', ['compile']);
-    gulp.watch('./declarations/*', ['compile']);
+    gulp.watch('./declarations/**/*', ['compile']);
+    gulp.watch('./utils/**/*', ['compile']);
     gulp.watch('./compile.js', ['compile']);
 
     gulp.watch('./static/js/**/*.js', ['scripts']);

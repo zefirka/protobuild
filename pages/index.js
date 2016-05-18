@@ -1,12 +1,12 @@
 'use strict';
 
-const markup = require('../utils/page');
-const page = markup.page;
-const header = markup.header;
-const nav = markup.nav;
-const col = markup.col;
-const form = markup.form;
-const flip = markup.flip;
+const  {page,
+        header,
+        nav,
+        col,
+        form,
+        flip,
+        footer} = require('../utils/page');
 
 module.exports =  page('index', 'Index', {
     description: 'Главная страница',
@@ -14,27 +14,7 @@ module.exports =  page('index', 'Index', {
     nav: Object.assign(nav(), {
         breadcrumbs: 'Index'
     }),
-    footer: {
-        itemClassName: 'b-footer__item',
-        footerItems: [
-            {text: 'One'},
-            {text: 'Two'}
-        ],
-        footerTable: {
-            rows: [
-                [
-                    col().data({
-                        component: 'list',
-                        params: {
-                            items: 'footerItems',
-                            template: 'simple',
-                            className: 'b-footer__list'
-                        }
-                    })
-                ]
-            ]
-        }
-    },
+    footer: footer(),
     'teh-list-items': [
         {text: 'A'},
         {text: 'B'},
@@ -44,9 +24,21 @@ module.exports =  page('index', 'Index', {
         indexTable: {
             rows: [
                 [
-                    col(12, 6, 4, 4).data(flipr('', 'Заборы')),
-                    col(12, 6, 4, 4).data(flipr('', 'Allah', 'right')),
-                    col(12, 12, 4, 4).data(flipr('', 'Testuinno', 'right')),
+                    col(12, 6, 4, 4).data(flipr('Детские площадки', '../../static/images/main/1.jpg', '', 'left',  [
+                        {text: 'Игровые комплексы', src: 'http://test.com'},
+                        {text: 'Песочницы', src: 'http://test.com'},
+                        {text: 'Качели', src: 'http://test.com'},
+                        {text: 'Резиновое покрытие', src: 'http://test.com'}
+                    ])),
+                    col(12, 6, 4, 4).data(flipr('Навесы и козырьки', '../../static/images/main/2.jpg',  '', 'right')),
+                    col(12, 6, 4, 4).data(flipr('Ворота и калитки', '../../static/images/main/3.jpg',  '', 'right', [
+                        {text: 'Откантные ворота', src: 'http://test.com'},
+                        {text: 'Распашные ворота', src: 'http://test.com'},
+                        {text: 'Секционные ворота', src: 'http://test.com'},
+                        {text: 'Рулонные ворота', src: 'http://test.com'},
+                        {text: 'Калитки', src: 'http://test.com'},
+                        {text: 'Автоматика для ворот', src: 'http://test.com'}
+                    ]))
                 ]
             ]
         },
@@ -54,32 +46,34 @@ module.exports =  page('index', 'Index', {
             value: 'pages/main'
         }
     },
-    feedbackForm: form('Feedback')
-        .text('Name', {
-            placeholder: 'Your name',
-            value: 'ALLAH !!!'
+    feedbackForm: form('Заказать звонок')
+        .text('Имя', {
+            // placeholder: 'Your name',
         })
-        .text('Email', {
-            placeholder: 'Your email'
+        .text('Телефон', {
+            // placeholder: 'Your pass'
         })
-        .password('Password', {
-            placeholder: 'Your pass'
+        .text('Удобное время', {
+            // placeholder: 'Your pass'
         })
-        .select('Test', 'тебе хабиб прислал бакшиш'.split(' '), {
+        .select('Время', [
+            'В любое время',
+            '09:00 - 12:00',
+            '12:00 - 15:00',
+            '15:00 - 18:00',
+            '18:00 - 21:00',
+        ], {
             className: 'form-select'
         })
-        .submit('Test', {
-            className: 'btn-success'
+        .submit('Отправить', {
+            className: 'b-button_primary'
         })
-        .submit('allah', {
-            className: 'btn-success'
+        .submit('Отмена', {
+            className: 'b-button_danger'
         })
         .value()
 });
 
-function flipr(name, title, position) {
-    return flip(name, title, 'http://placehold.it/800x200', position || 'left', [
-        {text: 'allah', src: 'http://yandex.ru'},
-        {text: 'babah', src: 'http://yandex.ru'}
-    ]);
+function flipr(bigTitle, src, title, position, elems) {
+    return flip(bigTitle, title, src || 'http://placehold.it/800x200.png', position || 'left', elems);
 }

@@ -3,6 +3,47 @@
 .b-footer {
   height: @footer-height; 
   margin-top: @footer-margin;
-  background: #2B76B2;
+  background: @dark;
+  padding: 15px 0;
   color: white;
+
+  &__header,
+  &__p,
+  &__address {
+  	margin: 0;
+  }
+
+  &__p{
+  	font-size: 12px;
+  	margin-bottom: 2px;
+  }
+
+  &__header {
+  	color: @primary;
+  	margin-bottom: 4px;
+  }
+
+  &__address {
+  	font-weight: bold;;
+  }
+
+  &_social-link {
+  	text-decoration: none;
+  	margin-right: 5px;
+  }
+
+  &__rights {
+  	color: @primary;
+  }
+}
+
+
+
+.sm {
+	.b-footer {
+		 &__p {
+		 	line-height: 13px;
+		 	margin-bottom: 5px;
+		 }
+	}
 }

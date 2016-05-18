@@ -24,7 +24,8 @@ module.exports = {
     header,
     page,
     form,
-    flip
+    flip,
+    footer
 };
 
 /**
@@ -113,12 +114,14 @@ function header() {
                 text: 'Заказать обратный звонок'
             }
         },
+        btntext: 'Закажи лох пидр',
         table: {
             rows: [
                 [
-                    col(null, 2, 3, 3).data('<h1>${title}</h1>'),
-                    col(null, 4, 4, 4).data({decl: 'logo'}),
-                    col(12,   6, 5, 5).data('${contacts}')
+                    col(null, null, 4, 4).data({decl: 'siteheade'}),
+                    col(4, 6, 4, 4).data({decl: 'logo'}),
+                    col(8, 3, 2, 2).data({decl: 'contacts'}),
+                    col(null, 3, 2, 2).data({decl: 'call'}),
                 ]
             ]
         }
@@ -147,6 +150,41 @@ function nav(active, listClassName, itemClassName) {
     };
 }
 
+function footer() {
+    return {
+        footerTable: {
+            rows: [
+                [
+                    col(null, 3, 3, 3).data({
+                        component: 'exec',
+                        params: {
+                            template: 'footer-col-1'
+                        }
+                    }),
+                    col(null, 3, 3, 3).data({
+                        component: 'exec',
+                        params: {
+                            template: 'footer-col-2'
+                        }
+                    }),
+                    col(6, 3, 3, 3).data({
+                        component: 'exec',
+                        params: {
+                            template: 'footer-col-3'
+                        }
+                    }),
+                    col(6, 3, 3, 3).data({
+                        component: 'exec',
+                        params: {
+                            template: 'footer-col-4'
+                        }
+                    })
+                ]
+            ]
+        }
+    };
+}
+
 /**
  * @public
  * @param {string} caption
@@ -163,8 +201,16 @@ function form(caption) {
         email: createInputType('email'),
         number: createInputType('number'),
         password: createInputType('password'),
-        checkbox: createInputType('checkbox'),
-        radio: createInputType('radio'),
+        checkbox: (label, checked, options) => {
+            struct.fields.push({
+                label,
+                input: Object.assign({
+                    type: 'checkbox',
+                    checked,
+                }, options)
+            });
+            return api;
+        },
         select: (label, options, selectOptions) => {
             struct.fields.push({
                 label,
@@ -179,6 +225,9 @@ function form(caption) {
                 type: 'submit',
                 text: text
             }, options));
+            return api;
+        },
+        radioGroup: () => {
             return api;
         },
         value: () => struct,
@@ -208,6 +257,15 @@ function form(caption) {
     return api;
 }
 
+/**
+ * @public
+ * @param {string} title
+ * @param {string} flipListTitle
+ * @param {string} image
+ * @param {string} position
+ * @param {object[]} items
+ * @return {object}
+ */
 function flip(title, fliplistTitle, image, position, items) {
     return {
         component: 'fliplist',

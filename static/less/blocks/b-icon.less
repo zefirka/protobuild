@@ -1,0 +1,39 @@
+@import '../variables.less';
+
+.b-icon {
+	display: inline-block;
+
+	&__social {
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+	}
+
+	&_facebook {
+		background: url('../../static/images/icons/icons.png') no-repeat 0 0;
+		&:hover {
+			background-position: -25px 0;
+		}
+	}
+
+	&_twitter {
+		background: url('../../static/images/icons/icons.png') no-repeat 0 -25px;
+		&:hover {
+			background-position: -25px -25px;
+		}
+	}
+
+	&_instagram {
+		background: url('../../static/images/icons/icons.png') no-repeat 0 -50px;
+		&:hover {
+			background-position: -25px -50px;
+		}
+	}
+
+	&_gplus {
+		background: url('../../static/images/icons/icons.png') no-repeat 0 -75px;
+		&:hover {
+			background-position: -25px -75px;
+		}
+	}
+}

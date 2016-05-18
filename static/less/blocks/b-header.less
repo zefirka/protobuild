@@ -1,3 +1,95 @@
+@import '../variables.less';
+
 .b-header {
-	padding: 10px 0;
+	border-top: 5px solid @secondary-dark;
+	border-bottom: solid 4px @secondary;
+	
+	.b-container{
+		padding: 8px 0 6px 0;
+		background: #eee;
+	}
+
+	&__site-title {
+		padding-top: 50px;
+		text-align: center;
+	}
+
+	&__site-container {
+		display: inline-block;
+		text-align: left;
+		padding-left: 30px;
+
+		.line {
+			line-height: 16px;
+		}
+	}
+
+	&__call {
+		margin-bottom: 3px;
+	}
+
+	&__call-container {
+		padding-top: 30px;
+		text-align: center;
+	}
+
+	&__contacts-container {
+		padding-top: 30px;
+		text-align: center;
+	}
+
+	&__contact-email {
+		text-align: left;
+		margin-bottom: 2px;
+	}
+
+
+	&__contact-tel {
+		text-align: left;
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 0px;
+		color: @primary;
+	}
+
+	&__call-button {
+		font-size: 19px;
+		border-radius: 50%;
+		border: none;
+		width: 40px;
+		height: 40px;
+
+		.b-icon {
+			position: relative;
+			top: 2px;
+			left: -1px;
+		}
+	}
+}
+
+.b-logo {
+	margin: 0 auto;
+	width: 200px;
+}
+
+.xs {
+	.b-logo {
+		width: 100px;
+	}
+
+	.b-header {
+		&__call-container {
+			padding-top: 0;
+			font-size: 12px;
+		}
+
+		&__contacts-container {
+			padding-top: 0;
+			font-size: 12px;
+		}
+
+		&__contact-tel {
+			font-size: 14px;
+		}
+	}
 }

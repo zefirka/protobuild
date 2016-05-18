@@ -3,21 +3,23 @@
 .b-fliplist {
 	overflow: hidden;;
 	position: relative;
-	height: 100px;
+	height: 200px;
 	margin-bottom: 10px;
+	background: lighten(@primary, 40%);
 
 	&_distant  {
 		.b-fliplist__background {
 			opacity: 0.3;
 		}
+
 	}
 
 	&__title {
 		position: relative;
 		color: white;
-		opacity: 0.6;
-		font-size: 38px;
-		padding: 10px 15px;
+		opacity: 0.9;
+		font-size: 28px;
+		padding: 0px 15px 0 15px;
 	}
 
 	&__background {
@@ -31,12 +33,18 @@
 	&__list-item {
 		width: 100%;
 		position: relative;
+		margin-bottom: 1px;
+
+		&:before {
+			display: none;
+		}
 		
 		.b-link{
 			display: block;
 			position: relative;
 			width: 100%;
 			z-index: 2;
+			text-decoration: none;
 		}
 
 		&:hover {
@@ -45,6 +53,7 @@
 				display: block;
 				background: @primary;
 				position: absolute;
+				border-radius: 0;
 				z-index: 0;
 				width: 140%;
 				height: 100%;
@@ -64,7 +73,7 @@
 		padding: 8px 10px;
 		z-index: 1;
 		width: 50%;
-		top: 0;
+		top: 35px;
 		right: 0;
 		transition: all 0.5s;
 		color: white;

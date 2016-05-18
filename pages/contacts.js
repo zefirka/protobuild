@@ -4,6 +4,7 @@ const markup = require('../utils/page');
 const page = markup.page;
 const header = markup.header;
 const nav = markup.nav;
+const footer = markup.footer;
 
 module.exports =  page('contacts', 'Contacts', {
     header: header(),
@@ -12,5 +13,5 @@ module.exports =  page('contacts', 'Contacts', {
     page: {
         value: 'pages/contacts',
     },
-    footer: true
+    footer: footer()
 });
